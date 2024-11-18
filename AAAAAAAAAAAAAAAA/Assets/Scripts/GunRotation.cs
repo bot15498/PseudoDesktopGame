@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GunRotation : MonoBehaviour
@@ -9,6 +10,7 @@ public class GunRotation : MonoBehaviour
     RaycastHit HitInfo;
     Vector3 aimpoint;
     public GameObject gun;
+    public LayerMask ignoreself;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +23,13 @@ public class GunRotation : MonoBehaviour
     {
 
 
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out HitInfo, 200.0f))
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out HitInfo, 200.0f, ~ignoreself))
         {
 
             Debug.DrawRay(cameraTransform.position, cameraTransform.forward * 200.0f, Color.yellow);
             aimpoint = HitInfo.point;
             gun.transform.LookAt(aimpoint);
+            //Debug.Log(HitInfo.collider.gameObject.name);
         }
         else
         {

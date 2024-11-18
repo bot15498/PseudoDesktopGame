@@ -20,16 +20,16 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   scatter:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.7
   clamp:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 65472
   tint:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   skipIterations:
     m_OverrideState: 0
@@ -105,10 +105,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.447
+    m_Value: 0.43
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.315
+    m_Value: 0.36
   rounded:
     m_OverrideState: 1
     m_Value: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.562
+    m_Value: 0.45
 --- !u!114 &-1947569833257466623
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -220,7 +220,7 @@ MonoBehaviour:
     m_Value: {x: 0.8033605, y: 0.7789955, z: 1, w: 0.36649218}
   gain:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0.837696}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.69014084}
 --- !u!114 &-131450015675167296
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -236,7 +236,7 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.85
+    m_Value: 1.03
   contrast:
     m_OverrideState: 1
     m_Value: 37
@@ -333,13 +333,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.28169015}
   midtones:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.6197183}
   highlights:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 1}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -373,7 +373,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.543
+    m_Value: 0.66
   clamp:
     m_OverrideState: 1
     m_Value: 0.05

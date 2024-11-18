@@ -166,55 +166,12 @@ public class PlayerController : MonoBehaviour
     /****************************** SLIDING ******************************/
     void SlideMovement()
     {
-        if (movement.grounded && playerInput.Jump())
-        {
-            if (controlledSlide)
-                slideDir = transform.forward;
-            movement.Jump(slideDir + Vector3.up, 1f);
-            playerInput.ResetJump();
-            slideTime = 0;
-        }
-
-        movement.Move(slideDir, movement.slideSpeed, 1f);
-        if (slideTime <= 0)
-        {
-            if (playerInput.crouching)
-                Crouch();
-            else
-                Uncrouch();
-        }
+        
     }
 
     void CheckSliding()
     {
-        //Check to slide when running
-        if(playerInput.crouch && canSlide())
-        {
-            slideDir = transform.forward;
-            movement.controller.height = halfheight;
-            controlledSlide = true;
-            slideTime = 1f;
-        }
-
-        //Lower slidetime
-        if (slideTime > 0)
-        {
-            status = Status.sliding;
-            slideTime -= Time.deltaTime;
-        }
-
-        if (Physics.Raycast(transform.position, -Vector3.up, out var hit, rayDistance))
-        {
-            float angle = Vector3.Angle(hit.normal, Vector3.up);
-            if (angle > slideLimit && movement.moveDirection.y < 0)
-            {
-                Vector3 hitNormal = hit.normal;
-                slideDir = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
-                Vector3.OrthoNormalize(ref hitNormal, ref slideDir);
-                controlledSlide = false;
-                status = Status.sliding;
-            }
-        }
+      
     }
 
     bool canSlide()
@@ -229,27 +186,17 @@ public class PlayerController : MonoBehaviour
     /***************************** CROUCHING *****************************/
     void CheckCrouching()
     {
-        if (!movement.grounded || (int)status > 2) return;
-
-        if(playerInput.crouch)
-        {
-            if (status != Status.crouching)
-                Crouch();
-            else
-                Uncrouch();
-        }
+       
     }
 
     void Crouch()
     {
-        movement.controller.height = halfheight;
-        status = Status.crouching;
+      
     }
 
     void Uncrouch()
     {
-        movement.controller.height = height;
-        status = Status.moving;
+       
     }
     /*********************************************************************/
 
