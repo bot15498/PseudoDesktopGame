@@ -1,88 +1,147 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BellWhip : MonoBehaviour
 {
-    public Transform jumpPoint; // The target (e.g., player)
-    public float flightTime = 2f; // Time it takes to reach the player
+    public Transform origin; // Custom origin point (assign in the Inspector)
+    public float rayLength = 10f; // Maximum length of the ray
+    public float drawSpeed = 5f; // Speed at which the line is drawn
+    public float retractSpeed = 5f; // Speed at which the line is retracted
 
-    private Rigidbody rb;
-    Transform cameraTransform;
-    Ray RayOrigin;
-    RaycastHit HitInfo;
-    public LayerMask ignoreself;
-    CharacterController CC;
+    private Vector3 endPoint; // Calculated endpoint of the ray
+    private Vector3 currentEndPoint; // Current endpoint of the line during drawing
+    private bool isDrawing = false; // Whether the line is being drawn
+    private bool isRetracting = false; // Whether the line is being retracted
+    bool canwhip;
+
+    private LineRenderer lineRenderer; // LineRenderer to draw the line
+
+    public PullIn currentpullin;
+
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        CC = GetComponent<CharacterController>();
+        // Initialize the LineRenderer
+        lineRenderer= GetComponent<LineRenderer>();
+        canwhip = true;
     }
-
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        // Start drawing when right mouse button is clicked
+        if (Input.GetKeyDown(KeyCode.Mouse1) && origin != null && canwhip == true)
         {
-            LaunchTowardsPoint();
-            /*if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out HitInfo, 200.0f, ~ignoreself))
-            {
-                //jumpPoint = HitInfo.transform;
-                
-            }
-            else
-            {
-                //Debug.Log("nothing hit");
-                //gun.transform.rotation = Quaternion.identity;
-            }
-            */
-            //LaunchTowardsPlayer();
+            StartDrawing();
+            canwhip = false;
+        }
+
+        // Handle the drawing process
+        if (isDrawing)
+        {
+            DrawLine();
+        }
+
+        // Handle the retraction process
+        if (isRetracting)
+        {
+            RetractLine();
         }
     }
 
-    void LaunchTowardsPoint()
+    // Initializes the drawing process
+    void StartDrawing()
     {
-        if (jumpPoint == null || rb == null)
+        // Cast a ray to determine the endpoint
+        Ray ray = new Ray(origin.position, origin.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, rayLength))
         {
-            Debug.LogWarning("Player or Rigidbody is not assigned!");
-            return;
+            // Set the endpoint to the hit point
+            if (hit.collider.gameObject.GetComponent<PullIn>() != false)
+            {
+                currentpullin = hit.collider.gameObject.GetComponent<PullIn>();
+            }
+            endPoint = hit.point;
+            Debug.Log($"Ray hit: {hit.collider.name}");
+        }
+        else
+        {
+            // Set the endpoint to the maximum ray length
+            endPoint = origin.position + origin.forward * rayLength;
         }
 
-        // Get starting and target positions
-        Vector3 startPos = transform.position;
-        Vector3 endPos = jumpPoint.position;
-
-        // Calculate initial velocity
-        Vector3 velocity = CalculateLaunchVelocity(startPos, endPos, flightTime);
-
-        // Apply the velocity to the rigidbody
-        rb.velocity = velocity;
-
-        // Ensure gravity is enabled
-        rb.useGravity = true;
+        // Initialize line drawing
+        currentEndPoint = origin.position;
+        lineRenderer.SetPosition(0, origin.position);
+        lineRenderer.SetPosition(1, origin.position);
+        isDrawing = true;
+        isRetracting = false;
     }
 
-    Vector3 CalculateLaunchVelocity(Vector3 start, Vector3 target, float time)
+    // Handles the line drawing process
+    void DrawLine()
     {
-        // Displacement between the start and target
-        Vector3 displacement = target - start;
+        // Update the origin point to follow the transform
+        Vector3 startPoint = origin.position;
 
-        // Separate horizontal and vertical components
-        Vector3 horizontalDisplacement = new Vector3(displacement.x, 0, displacement.z);
-        float horizontalDistance = horizontalDisplacement.magnitude;
+        // Incrementally draw the line towards the endpoint
+        Vector3 direction = (endPoint - startPoint).normalized;
+        currentEndPoint += direction * drawSpeed * Time.deltaTime;
 
-        float verticalDisplacement = displacement.y;
+        // Update the LineRenderer
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, currentEndPoint);
 
-        // Calculate horizontal and vertical velocities
-        float horizontalVelocity = horizontalDistance / time;
-        float verticalVelocity = (verticalDisplacement / time) + (0.5f * Mathf.Abs(Physics.gravity.y) * time);
+        // Stop drawing when the line reaches the endpoint
+        if (Vector3.Distance(currentEndPoint, startPoint) >= Vector3.Distance(endPoint, startPoint))
+        {
+            currentEndPoint = endPoint;
+            isDrawing = false; // Stop further updates
+            OnLineComplete(); // Trigger custom logic when drawing is complete
+        }
+    }
 
-        // Combine into a single velocity vector
-        Vector3 horizontalDirection = horizontalDisplacement.normalized;
-        Vector3 velocity = horizontalDirection * horizontalVelocity;
-        velocity.y = verticalVelocity;
+    // Handles the line retraction process
+    void RetractLine()
+    {
+        // Update the origin point to follow the transform
+        Vector3 startPoint = origin.position;
 
-        return velocity;
+        // Incrementally retract the line back to the start point
+        Vector3 direction = (startPoint - currentEndPoint).normalized;
+        currentEndPoint += direction * retractSpeed * Time.deltaTime;
+
+        // Update the LineRenderer
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, currentEndPoint);
+
+        // Stop retracting when the line reaches the start point
+        if (Vector3.Distance(currentEndPoint, startPoint) <= 0.1f)
+        {
+            currentEndPoint = startPoint;
+            lineRenderer.positionCount = 0;
+            lineRenderer.positionCount = 2;
+            canwhip = true;
+            isRetracting = false; // Stop further updates
+
+            Debug.Log("Line fully retracted!");
+        }
+    }
+
+    // Custom function triggered when the line finishes drawing
+    void OnLineComplete()
+    {
+        Debug.Log("Line drawing complete!");
+        // Add your custom logic here
+        if (currentpullin != null)
+        {
+            currentpullin.LaunchTowardsPlayer();
+        }
+        // Start retracting the line
+        isRetracting = true;
+        currentpullin = null;
     }
 }

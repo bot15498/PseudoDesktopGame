@@ -12,19 +12,16 @@ public class PullIn : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            LaunchTowardsPlayer();
-        }
+       
     }
 
-    void LaunchTowardsPlayer()
+    public void LaunchTowardsPlayer()
     {
         if (player == null || rb == null)
         {
