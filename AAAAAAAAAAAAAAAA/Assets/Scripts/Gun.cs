@@ -17,6 +17,7 @@ public class Gun : MonoBehaviour
     public float timer;
     bool isreloading;
     bool canfire;
+    public Animator anim;
     //public TextMeshProUGUI ammotext;
     //public Animator anim;
     public GameObject reloadText;
@@ -47,7 +48,7 @@ public class Gun : MonoBehaviour
         {
             Instantiate(bullet, gunBarrel.position, gunBarrel.rotation);
             ammocount -= 1;
-
+            anim.Play("Crossbow_fire", -1, 0f);
             Debug.Log("Shoot");
 
             canfire = false;
@@ -55,7 +56,7 @@ public class Gun : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Mouse0) && ammocount > 0 && isreloading == false)
         {
-           //anim.Play("Fire");
+           
         }
         else if (isreloading == false)
         {
@@ -66,7 +67,7 @@ public class Gun : MonoBehaviour
         if (ammocount == 0 || (Input.GetKeyDown(KeyCode.R) && ammocount != ammocountMax))
         {
 
-            //anim.Play("reload");
+            anim.Play("Crossbow_reload", -1, 0f);
             isreloading = true;
             //reloadText.SetActive(false);
 

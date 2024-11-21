@@ -5,13 +5,24 @@ using UnityEngine;
 
     public class EnemyHealth : MonoBehaviour
     {
-        public int maxHealth = 50;
-        private int currentHealth;
+
+     public float dbnoTimer;
+     public int maxHealth;
+     private int currentHealth;
+
+
+
+
 
         void Start()
         {
             currentHealth = maxHealth;
         }
+
+        public void MeleeDamage(int damage)
+    {
+        currentHealth -= damage;
+    } 
 
         public void TakeDamage(int damage)
         {

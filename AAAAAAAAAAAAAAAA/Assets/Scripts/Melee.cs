@@ -55,7 +55,7 @@ public class Melee : MonoBehaviour
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(attackDamage);
+                enemyHealth.MeleeDamage(attackDamage);
             }
 
             // Apply knockback
