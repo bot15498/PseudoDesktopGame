@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-    public class EnemyHealth : MonoBehaviour
-    {
+public class EnemyHealth : MonoBehaviour
+{
 
     public int healthDrops;
     public int AmmoDrops;
@@ -14,10 +14,11 @@ using UnityEngine;
     public GameObject ammodrop;
     public GameObject abilitydrop;
 
-     public float dbnoTimer;
+    public float dbnoTimer;
     bool dbno;
-     public int maxHealth;
-     private int currentHealth;
+    public int maxHealth;
+    [SerializeField]
+    private int currentHealth;
 
     public float minForce = 1f;
 
@@ -28,20 +29,22 @@ using UnityEngine;
     public float upwardBias = 0.5f;
     private Collider thiscolluider;
     Rigidbody rb;
+    private AiBehaviorBase aiBehavior;
 
 
 
-        void Start()
-        {
+    void Start()
+    {
         dbno = false;
-            currentHealth = maxHealth;
+        currentHealth = maxHealth;
         thiscolluider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        }
+        aiBehavior = GetComponent<AiBehaviorBase>();
+    }
 
     private void Update()
     {
-        if(dbno == true)
+        if (dbno == true)
         {
             Destroy(gameObject, dbnoTimer);
             //DBNO visual effects and animation changes
@@ -55,7 +58,7 @@ using UnityEngine;
         {
             meleeExecution();
         }
-        if(damage < currentHealth)
+        if (damage < currentHealth)
         {
             currentHealth -= damage;
 
@@ -63,31 +66,32 @@ using UnityEngine;
 
         }
     }
-        
 
 
-        
 
-        public void TakeDamage(int damage)
-        {
-            currentHealth -= damage;
-            //Debug.Log($"Enemy took {damage} damage. Remaining health: {currentHealth}");
-            if(currentHealth <= 0)
+
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        //Debug.Log($"Enemy took {damage} damage. Remaining health: {currentHealth}");
+        if (currentHealth <= 0)
         {
             dbno = true;
+            aiBehavior.stunState = EnemyAiStunState.Stagger;
         }
-            
-        }
+
+    }
 
 
 
     void Die()
     {
-            //Debug.Log("Enemy died!");
-            Destroy(gameObject);
+        //Debug.Log("Enemy died!");
+        Destroy(gameObject);
     }
 
-    
+
 
     void meleeExecution()
     {
@@ -165,5 +169,5 @@ using UnityEngine;
 
 
 
-    }
+}
 

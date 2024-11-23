@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private bool forceGravity;
     private float forceTime = 0;
 
-    private void Start()
+    private void Awake()
     {
         // Saving component references to improve performance.
         controller = GetComponent<CharacterController>();

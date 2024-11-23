@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RangedVampire : AiBehaviorBase
 {
-    public GameObject buleltPrefab;
-    public float meleeRange = 1f;
+    public GameObject bulletPrefab;
+    public GameObject bulletSpawnPoint;
 
     new void Start()
     {
@@ -24,11 +24,6 @@ public class RangedVampire : AiBehaviorBase
 
     public override void Attack()
     {
-        Debug.Log("pew pew");
-    }
-
-    public bool IsInMeleeRange()
-    {
-        return false;
+        Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
     }
 }

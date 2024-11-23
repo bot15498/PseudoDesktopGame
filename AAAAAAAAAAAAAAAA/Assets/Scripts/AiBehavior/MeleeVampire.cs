@@ -29,6 +29,6 @@ public class MeleeVampire : AiBehaviorBase
 
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

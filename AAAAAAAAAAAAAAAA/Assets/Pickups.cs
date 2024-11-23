@@ -8,26 +8,15 @@ public class Pickups : MonoBehaviour
 
     public Gun gun;
     public ShotgunBlast blast;
+    public PlayerHealth healther;
     public int chargestoadd;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
+    public int healthToadd;
 
     private void OnCollisionEnter(Collision collision)
     {
-
         Debug.Log(collision.gameObject.tag);
-
-       
     }
-    
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "AmmoPickup")
@@ -40,6 +29,11 @@ public class Pickups : MonoBehaviour
         {
             Destroy(hit.gameObject);
             blast.addCharges(chargestoadd);
+        }
+        if (hit.gameObject.tag == "HealthPickup" && healther.health < healther.maxHealth)
+        {
+            Destroy(hit.gameObject);
+            healther.health = Mathf.Min(healther.health + healthToadd, healther.maxHealth);
         }
     }
 

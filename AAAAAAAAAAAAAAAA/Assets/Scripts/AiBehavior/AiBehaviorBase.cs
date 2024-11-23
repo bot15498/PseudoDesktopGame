@@ -35,6 +35,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     public GameObject player;
     public float speed = 5f;
     [Header("AI Agent Avoidance settings")]
+    public NavMeshAgent agent;
     public float avoidCircleRadius = 5f;
     public float lineOfSightWidth = 2f;
     public float avoidSpeedMultiplier = 2f;
@@ -50,9 +51,12 @@ public abstract class AiBehaviorBase : MonoBehaviour
     public float maxChaseDistance = 5f;
     [Tooltip("How far an enemy has to before they 'forget' the player is there. ")]
     public float forgetDuration = 10f;
+    public EnemyAiStunState stunState;
+    public bool canSeeBullet = false;
     [Header("General attack stuff.")]
     public float attackInterval = 1f;
     public float randomInterval = 0.1f;
+    public bool predictPlayerLocation = false;
 
     // For patroling
     public Transform[] waypoints;
@@ -60,20 +64,15 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private int currWaypointIndex = 0;
     private bool isIncreasingIndex = false;
 
-    [SerializeField]
-    protected bool canSeeBullet = false;
+    private Rigidbody rb;
     [SerializeField]
     private LayerMask playerLayerMask;
-    [SerializeField]
-    private NavMeshAgent agent;
-    private SphereCollider viewTrigger = null;
     private AiAvoidanceCircle avoidCircle;
     private AiLineOfSight lineOfSight;
+    private AiViewTrigger maxViewCircle;
     [SerializeField]
     private EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
     private float timeSinceLastSawPlayer = 0f;
-    [SerializeField]
-    private EnemyAiStunState stunState;
     private float timeSinceLastAttack = 0f;
 
 
@@ -81,13 +80,24 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     protected void Start()
     {
+        // Get rigid body
+        rb= GetComponent<Rigidbody>();
+
         // Get the nav mesh agent
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
+        agent.speed = speed;
 
         // Set up lists
         agentsInAvoidanceCircle = new List<Transform>();
         agentsInLineOfSight = new List<Transform>();
+
+        // Create a child game object with the alert field of view
+        GameObject maxViewObject = new GameObject("MaxViewCircle");
+        maxViewObject.transform.parent = transform;
+        maxViewObject.transform.localPosition = Vector3.zero;
+        maxViewCircle = maxViewObject.AddComponent<AiViewTrigger>();
+        maxViewCircle.CapsuleRadius = maxViewDistance;
 
         // Create a child game object with the avoidance circle, and get the reference to it
         GameObject avoidObject = new GameObject("AvoidCircle");
@@ -110,18 +120,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
         {
             player = GameObject.FindGameObjectsWithTag("Player").FirstOrDefault();
         }
-        if (viewTrigger == null)
-        {
-            viewTrigger = CreateSphereTrigger();
-        }
-        if (viewTrigger != null && viewTrigger.radius != maxViewDistance)
-        {
-            viewTrigger.radius = maxViewDistance;
-        }
-    }
 
-    protected void FixedUpdate()
-    {
         if (stunState == EnemyAiStunState.Normal)
         {
             // Handle movement 
@@ -177,13 +176,17 @@ public abstract class AiBehaviorBase : MonoBehaviour
             }
             else
             {
-                timeSinceLastAttack += Time.fixedDeltaTime;
+                timeSinceLastAttack += Time.deltaTime;
             }
         }
         else
         {
             StopChasePlayer();
         }
+    }
+
+    protected void FixedUpdate()
+    {
 
     }
 
@@ -228,23 +231,24 @@ public abstract class AiBehaviorBase : MonoBehaviour
         }
     }
 
-    private SphereCollider CreateSphereTrigger()
-    {
-        SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
-        trigger.isTrigger = true;
-        trigger.radius = maxViewDistance;
-        return trigger;
-    }
-
     public void FacePlayer()
     {
-        Vector3 direction = player.transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y - 90, 0f);
+        if(predictPlayerLocation)
+        {
+
+        }
+        else
+        {
+            // dumb just look at player
+            Vector3 direction = player.transform.position - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+        }
     }
 
     public void ChasePlayer()
     {
+        rb.isKinematic = true;
         agent.isStopped = false;
         agent.SetDestination(player.transform.position);
     }
@@ -260,6 +264,18 @@ public abstract class AiBehaviorBase : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         currWaypointIndex = (currWaypointIndex + 1) % waypoints.Length;
         isIncreasingIndex = false;
+    }
+
+    public IEnumerator DelayStunStateChange(EnemyAiStunState newstate, float waitduration)
+    {
+        yield return new WaitForSeconds(waitduration);
+        stunState = newstate;
+        if(newstate == EnemyAiStunState.Normal)
+        {
+            // We are becoming unstunned / unstaggered, so reenable navmesh stuff.
+            rb.isKinematic = true;
+        }
+        yield return null;
     }
 
     public void ApplyAvoidance()
@@ -356,7 +372,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 {
                     ChasePlayer();
                     FacePlayer();
-                    timeSinceLastSawPlayer += Time.fixedDeltaTime;
+                    timeSinceLastSawPlayer += Time.deltaTime;
                 }
 
                 if (timeSinceLastSawPlayer > forgetDuration)
@@ -373,5 +389,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, maxViewDistance);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, avoidCircleRadius);
     }
 }

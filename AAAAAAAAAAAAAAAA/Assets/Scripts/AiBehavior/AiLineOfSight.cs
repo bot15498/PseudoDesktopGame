@@ -39,15 +39,15 @@ public class AiLineOfSight : MonoBehaviour
     {
         trigger = gameObject.AddComponent<BoxCollider>();
         trigger.isTrigger = true;
-        trigger.size = new Vector3(maxLength, 1, width);
-        trigger.center = new Vector3(maxLength / 2, 0, 0);
+        trigger.size = new Vector3(width, 1, maxLength);
+        trigger.center = new Vector3(0, 0, maxLength / 2);
         return trigger;
     }
 
     private void SetLineOfSightWidth(float width)
     {
-        trigger.size = new Vector3(trigger.size.x, trigger.size.y, width);
-        trigger.center = new Vector3(trigger.size.x / 2, 0, 0);
+        trigger.size = new Vector3(width, trigger.size.y, trigger.size.z);
+        trigger.center = new Vector3(0, 0, trigger.size.z / 2);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AiAvoidanceCircle : MonoBehaviour
 {
-    private CapsuleCollider trigger;
+    private SphereCollider trigger;
     public AiBehaviorBase behaviourBase;
 
     private void Awake()
@@ -35,9 +35,9 @@ public class AiAvoidanceCircle : MonoBehaviour
         }
     }
 
-    public CapsuleCollider CreateCapsuleTrigger(float radius)
+    public SphereCollider CreateCapsuleTrigger(float radius)
     {
-        trigger = gameObject.AddComponent<CapsuleCollider>();
+        trigger = gameObject.AddComponent<SphereCollider>();
         trigger.isTrigger = true;
         trigger.radius = radius;
         CapsuleRadius = radius;
@@ -61,12 +61,12 @@ public class AiAvoidanceCircle : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        if(trigger != null)
-        {
-            Gizmos.DrawWireSphere(transform.position, trigger.radius);
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.magenta;
+    //    if(trigger != null)
+    //    {
+    //        Gizmos.DrawWireSphere(transform.position, trigger.radius);
+    //    }
+    //}
 }
