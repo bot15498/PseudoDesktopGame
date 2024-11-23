@@ -46,8 +46,9 @@ public class EnemyHealth : MonoBehaviour
     {
         if (dbno == true)
         {
-            Destroy(gameObject, dbnoTimer);
-            //DBNO visual effects and animation changes
+            // Waiting for melee execution to kill us.
+            aiBehavior.agent.isStopped = true;
+            rb.isKinematic = false;
         }
     }
 
@@ -61,9 +62,6 @@ public class EnemyHealth : MonoBehaviour
         if (damage < currentHealth)
         {
             currentHealth -= damage;
-
-
-
         }
     }
 
@@ -74,7 +72,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        //Debug.Log($"Enemy took {damage} damage. Remaining health: {currentHealth}");
+        // Debug.Log($"Enemy took {damage} damage. Remaining health: {currentHealth}");
         if (currentHealth <= 0)
         {
             dbno = true;
@@ -164,7 +162,7 @@ public class EnemyHealth : MonoBehaviour
         }
 
 
-
+        Die();
     }
 
 

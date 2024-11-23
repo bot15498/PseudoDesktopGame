@@ -56,7 +56,6 @@ public abstract class AiBehaviorBase : MonoBehaviour
     [Header("General attack stuff.")]
     public float attackInterval = 1f;
     public float randomInterval = 0.1f;
-    public bool predictPlayerLocation = false;
 
     // For patroling
     public Transform[] waypoints;
@@ -233,17 +232,10 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     public void FacePlayer()
     {
-        if(predictPlayerLocation)
-        {
-
-        }
-        else
-        {
-            // dumb just look at player
-            Vector3 direction = player.transform.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
-        }
+        // dumb just look at player
+        Vector3 direction = player.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
     }
 
     public void ChasePlayer()
