@@ -14,6 +14,7 @@ public class Melee : MonoBehaviour
     public float meleecooldown;
     float timer;
     bool canmelee;
+    public float animdelay;
 
 
     private void Start()
@@ -27,7 +28,7 @@ public class Melee : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && canmelee == true) // Left mouse button for attack
         {
 
-            PerformMeleeAttack();
+            StartCoroutine(ExampleCoroutine());
             anim.Play("MeleeAttack",-1,0f);
             canmelee = false;
         }
@@ -75,5 +76,16 @@ public class Melee : MonoBehaviour
         // Draw the attack range in the Scene view for debugging
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    IEnumerator ExampleCoroutine()
+    {
+        //Print the time of when the function is first called.
+
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(animdelay);
+
+        PerformMeleeAttack();
     }
 }

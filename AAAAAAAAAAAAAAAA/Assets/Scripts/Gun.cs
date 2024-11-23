@@ -11,6 +11,10 @@ public class Gun : MonoBehaviour
     public GameObject bullet;
     public int ammocountMax;
     public int ammocount;
+    public int reserveAmmoMax;
+    public int reserveAmmoCurrent;
+    public int ammoPerPickup;
+
     public float firerate;
     float fireratetimer;
     public float reloadtimer;
@@ -18,7 +22,7 @@ public class Gun : MonoBehaviour
     bool isreloading;
     bool canfire;
     public Animator anim;
-    //public TextMeshProUGUI ammotext;
+    public TextMeshProUGUI ammotext;
     //public Animator anim;
     public GameObject reloadText;
 
@@ -36,10 +40,10 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (ammocount <= 5 && isreloading == false)
+        ammotext.text = ammocount.ToString() + "/" + reserveAmmoCurrent.ToString();
+        if (ammocount <= 3 && isreloading == false)
         {
-            //reloadText.SetActive(true);
+            reloadText.SetActive(true);
         }
 
 
@@ -49,8 +53,8 @@ public class Gun : MonoBehaviour
             Instantiate(bullet, gunBarrel.position, gunBarrel.rotation);
             ammocount -= 1;
             anim.Play("Crossbow_fire", -1, 0f);
+            
             Debug.Log("Shoot");
-
             canfire = false;
 
         }
@@ -64,38 +68,66 @@ public class Gun : MonoBehaviour
         }
 
 
-        if (ammocount == 0 || (Input.GetKeyDown(KeyCode.R) && ammocount != ammocountMax))
+        if ((ammocount == 0 && reserveAmmoCurrent != 0) || ((Input.GetKeyDown(KeyCode.R) && ammocount != ammocountMax))&& reserveAmmoCurrent != 0)
         {
 
-            anim.Play("Crossbow_reload", -1, 0f);
+            anim.Play("Crossbow_reload");
             isreloading = true;
-            //reloadText.SetActive(false);
-
-           
-
+            reloadText.SetActive(false);
         }
+
+
         if (isreloading == true)
         {
             timer += Time.deltaTime;
         }
 
-
         if (timer >= reloadtimer)
         {
             isreloading = false;
+            if(ammocountMax - ammocount <= reserveAmmoCurrent)
+            {
+                reserveAmmoCurrent -= (ammocountMax - ammocount);
+                ammocount = ammocountMax;
+
+            }else if(ammocountMax - ammocount > reserveAmmoCurrent)
+            {
+                ammocount += reserveAmmoCurrent;
+                reserveAmmoCurrent = 0;
+            }
 
             timer = 0;
-            ammocount = ammocountMax;
+            
         }
+
+
         if (canfire == false)
         {
             fireratetimer += Time.deltaTime;
-            if (fireratetimer >= firerate)
-            {
-                canfire = true;
-                fireratetimer = 0;
-            }
         }
 
+        if (fireratetimer >= firerate)
+        {
+            canfire = true;
+            fireratetimer = 0;
+        }
+    }
+
+    public void addAmmo()
+    {
+        if(reserveAmmoCurrent < reserveAmmoMax)
+        {
+            if(reserveAmmoCurrent + ammoPerPickup <= reserveAmmoMax)
+            {
+                reserveAmmoCurrent += ammoPerPickup;
+            }
+            else
+            {
+                if(reserveAmmoCurrent + ammoPerPickup > reserveAmmoMax)
+                {
+                    reserveAmmoCurrent = reserveAmmoMax;
+                }
+            }
+        }
     }
 }

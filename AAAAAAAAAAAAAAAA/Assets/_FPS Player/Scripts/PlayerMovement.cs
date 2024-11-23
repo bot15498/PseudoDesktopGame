@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         // Saving component references to improve performance.
         controller = GetComponent<CharacterController>();
     }
-    
+
     private void Update()
     {
         if (forceTime > 0)
@@ -45,9 +45,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(forceTime > 0)
+        if (forceTime > 0)
         {
-            if(forceGravity)
+            if (forceGravity)
                 moveDirection.y -= gravity * Time.deltaTime;
             grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
         }
@@ -55,12 +55,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void LateFixedUpdate()
     {
-
     }
 
     public void Move(Vector2 input, bool sprint, bool crouching)
     {
-        if(forceTime > 0)
+        if (forceTime > 0)
             return;
 
         float speed = (!sprint) ? walkSpeed : runSpeed;
@@ -72,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = transform.TransformDirection(moveDirection) * speed;
             UpdateJump();
         }
-        
+
         // Apply gravity
         moveDirection.y -= gravity * Time.deltaTime;
         // Move the controller, and set grounded true or false depending on whether we're standing on something
@@ -127,4 +126,21 @@ public class PlayerMovement : MonoBehaviour
     {
         contactPoint = hit.point;
     }
+
+    /// <summary>
+    /// Apply knockback to the player.
+    /// </summary>
+    /// <param name="direction">The direction of the knockback (usually opposite of the source).</param>
+    /// <param name="knockbackForce">The strength of the knockback.</param>
+    /// <param name="duration">The duration of the knockback effect.</param>
+    /// <param name="applyGravity">Whether gravity should be applied during the knockback.</param>
+    public void ApplyKnockback(Vector3 direction, float knockbackForce, float duration, bool applyGravity = true)
+    {
+        // Normalize direction to ensure consistent movement
+        direction = direction.normalized;
+
+        // Use ForceMove for knockback
+        ForceMove(direction, knockbackForce, duration, applyGravity);
+    }
+
 }
