@@ -399,10 +399,11 @@ MonoBehaviour:
   agentsInAvoidanceCircle: []
   agentsInLineOfSight: []
   maxViewDistance: 10
-  minApproachDistance: 5
-  maxChaseDistance: 8
+  minApproachDistance: 0
+  maxChaseDistance: -1
   forgetDuration: 10
   attackInterval: 1
+  randomInterval: 0.1
   waypoints: []
   patrolWaitTimeSec: 3
   canSeeBullet: 0
@@ -794,6 +795,7 @@ MonoBehaviour:
   maxChaseDistance: 8
   forgetDuration: 10
   attackInterval: 1
+  randomInterval: 0.1
   waypoints: []
   patrolWaitTimeSec: 3
   canSeeBullet: 0

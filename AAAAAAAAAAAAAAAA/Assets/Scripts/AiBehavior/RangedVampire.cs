@@ -24,7 +24,7 @@ public class RangedVampire : AiBehaviorBase
 
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("pew pew");
     }
 
     public bool IsInMeleeRange()
