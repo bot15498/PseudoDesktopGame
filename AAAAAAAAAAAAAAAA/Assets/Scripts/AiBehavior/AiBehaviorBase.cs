@@ -43,15 +43,16 @@ public abstract class AiBehaviorBase : MonoBehaviour
     public List<Transform> agentsInLineOfSight;
     [Header("Attacking Player settings")]
     [Tooltip("The max distance that the enemy will use to look at a player.")]
-    public float maxViewDistance  = 5f; 
+    public float maxViewDistance = 5f;
     [Tooltip("How close the enemy will get to the player. ")]
-    public float minApproachDistance = 0f; 
+    public float minApproachDistance = 0f;
     [Tooltip("How far away the enemy must be before they start chasing. ")]
-    public float maxChaseDistance = 5f; 
+    public float maxChaseDistance = 5f;
     [Tooltip("How far an enemy has to before they 'forget' the player is there. ")]
     public float forgetDuration = 10f;
     [Header("General attack stuff.")]
     public float attackInterval = 1f;
+    public float randomInterval = 0.1f;
 
     // For patroling
     public Transform[] waypoints;
@@ -73,6 +74,8 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private float timeSinceLastSawPlayer = 0f;
     [SerializeField]
     private EnemyAiStunState stunState;
+    private float timeSinceLastAttack = 0f;
+
 
     public abstract void Attack();
 
@@ -119,10 +122,8 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if(stunState == EnemyAiStunState.Normal)
+        if (stunState == EnemyAiStunState.Normal)
         {
-            // Handle attack
-
             // Handle movement 
             switch (enemyAiType)
             {
@@ -140,7 +141,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                     ApplyFollow();
                     break;
                 case EnemyAiType.Patrol:
-                    if(chaseState != EnemyAiChaseState.Idle)
+                    if (chaseState != EnemyAiChaseState.Idle)
                     {
                         ApplyAvoidance();
                         ApplyFollow();
@@ -167,12 +168,23 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 case EnemyAiType.Lure:
                     break;
             }
+
+            // Handle attack
+            if (timeSinceLastAttack >= attackInterval + Random.Range(0, randomInterval) && chaseState != EnemyAiChaseState.Idle && CanSeePlayer())
+            {
+                Attack();
+                timeSinceLastAttack = 0;
+            }
+            else
+            {
+                timeSinceLastAttack += Time.fixedDeltaTime;
+            }
         }
         else
         {
             StopChasePlayer();
         }
-        
+
     }
 
     public bool CanSeePlayer(float maxView = float.PositiveInfinity)
@@ -252,7 +264,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     public void ApplyAvoidance()
     {
-        if(agentsInAvoidanceCircle.Count == 0 && agentsInLineOfSight.Count == 0)
+        if (agentsInAvoidanceCircle.Count == 0 && agentsInLineOfSight.Count == 0)
         {
             return;
         }
@@ -294,7 +306,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
             FacePlayer();
         }
 
-        switch(chaseState)
+        switch (chaseState)
         {
             case EnemyAiChaseState.Idle:
                 StopChasePlayer();
@@ -304,12 +316,12 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 }
                 break;
             case EnemyAiChaseState.AttackingAndChasing:
-                if(!CanSeePlayer() && !canSeeBullet)
+                if (!CanSeePlayer() && !canSeeBullet)
                 {
                     // Can't see the player at all, so go to chasing for line of sight
                     chaseState = EnemyAiChaseState.ChasingForLineOfSight;
                 }
-                else if(DistanceToPlayer() <= minApproachDistance)
+                else if (DistanceToPlayer() <= minApproachDistance)
                 {
                     // Close enough, stop chasing and be still
                     chaseState = EnemyAiChaseState.AttackingAndIdle;
@@ -327,7 +339,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                     // Can't see the player at all, so go to chasing for line of sight
                     chaseState = EnemyAiChaseState.ChasingForLineOfSight;
                 }
-                else if(DistanceToPlayer() >= maxChaseDistance)
+                else if (DistanceToPlayer() >= maxChaseDistance)
                 {
                     // Too far, chase
                     ChasePlayer();
@@ -335,7 +347,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 }
                 break;
             case EnemyAiChaseState.ChasingForLineOfSight:
-                if(CanSeePlayer())
+                if (CanSeePlayer())
                 {
                     chaseState = EnemyAiChaseState.AttackingAndChasing;
                     timeSinceLastSawPlayer = 0;
@@ -347,7 +359,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                     timeSinceLastSawPlayer += Time.fixedDeltaTime;
                 }
 
-                if(timeSinceLastSawPlayer > forgetDuration)
+                if (timeSinceLastSawPlayer > forgetDuration)
                 {
                     // We have gone long enough without seeing the player, I guess they are gone?
                     chaseState = EnemyAiChaseState.Idle;
