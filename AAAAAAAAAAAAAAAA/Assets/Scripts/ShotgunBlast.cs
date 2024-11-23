@@ -23,7 +23,6 @@ public class ShotgunBlast : MonoBehaviour
     public PlayerMovement pm;
     public float knockbackForce = 5f;           
     public float knockbackDuration = 0.2f;      
-    private bool isKnockingBack = false;
     public CameraShake cs;
     bool cooldown2;
     public Animator anim;
