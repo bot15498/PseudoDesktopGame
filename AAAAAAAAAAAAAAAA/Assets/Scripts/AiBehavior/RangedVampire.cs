@@ -7,6 +7,7 @@ public class RangedVampire : AiBehaviorBase
     public GameObject bulletPrefab;
     public GameObject bulletSpawnPoint;
     public bool predictPlayerLocation = false;
+    private Vector3 previousPlayerLocation;
 
     new void Start()
     {
@@ -20,7 +21,16 @@ public class RangedVampire : AiBehaviorBase
 
     new void FixedUpdate()
     {
+        if(player != null)
+        {
+            previousPlayerLocation = player.transform.position;
+        }
         base.FixedUpdate();
+    }
+
+    public override bool IsObjectInAttackRange()
+    {
+        return CanSeePlayer();
     }
 
     public override void Attack()
@@ -30,7 +40,7 @@ public class RangedVampire : AiBehaviorBase
 
     public new void FacePlayer()
     {
-        if(!predictPlayerLocation)
+        if(!predictPlayerLocation || player == null)
         {
             // Do the base logic
             base.FacePlayer();
@@ -42,7 +52,8 @@ public class RangedVampire : AiBehaviorBase
 
             float distanceToPlayer = Vector3.Distance(transform.position,player.transform.position);
             float timeToReachPlayerNominal = distanceToPlayer / bulletSpeed;
-            Vector3 predictedPosition = agent.velocity * timeToReachPlayerNominal + transform.position;
+            Vector3 playerVelocity = (player.transform.position - previousPlayerLocation) / Time.fixedDeltaTime;
+            Vector3 predictedPosition = playerVelocity * timeToReachPlayerNominal + transform.position;
 
             Vector3 direction = predictedPosition - transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);

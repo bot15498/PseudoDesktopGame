@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-
+    public bool bypassMeleeExecution; 
     public int healthDrops;
     public int AmmoDrops;
     public int AbilityDrops;
@@ -49,19 +49,28 @@ public class EnemyHealth : MonoBehaviour
             // Waiting for melee execution to kill us.
             aiBehavior.agent.isStopped = true;
             rb.isKinematic = false;
+            rb.drag = 999f;
         }
     }
 
 
     public void MeleeDamage(int damage)
     {
-        if (damage >= currentHealth)
-        {
-            meleeExecution();
-        }
         if (damage < currentHealth)
         {
             currentHealth -= damage;
+        }
+        else
+        {
+            if(bypassMeleeExecution)
+            {
+                // just die
+                Die();
+            }
+            else
+            {
+                meleeExecution();
+            }
         }
     }
 
@@ -75,8 +84,17 @@ public class EnemyHealth : MonoBehaviour
         // Debug.Log($"Enemy took {damage} damage. Remaining health: {currentHealth}");
         if (currentHealth <= 0)
         {
-            dbno = true;
-            aiBehavior.stunState = EnemyAiStunState.Stagger;
+            if (bypassMeleeExecution)
+            {
+                // Just going to die.
+                Die();
+            }
+            else
+            {
+                // Start timer for melee execution
+                dbno = true;
+                aiBehavior.stunState = EnemyAiStunState.Stagger;
+            }
         }
 
     }

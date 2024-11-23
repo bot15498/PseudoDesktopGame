@@ -33,6 +33,11 @@ public class MeleeVampire : AiBehaviorBase
         base.FixedUpdate();
     }
 
+    public override bool IsObjectInAttackRange()
+    {
+        return CanSeePlayer() && DistanceToPlayer() <= attackRange;
+    }
+
     public override void Attack()
     {
         if(Random.Range(0,1f) < teleportAttackChance)
@@ -46,6 +51,12 @@ public class MeleeVampire : AiBehaviorBase
 
             foreach (Collider player in hitColliders)
             {
+                if(player.gameObject == gameObject)
+                {
+                    // myself,
+                    continue;
+                }
+
                 // Apply damage
                 PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
                 if (playerHealth != null)

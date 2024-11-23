@@ -77,6 +77,8 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     public abstract void Attack();
 
+    public abstract bool IsObjectInAttackRange();
+
     protected void Start()
     {
         // Get rigid body
@@ -168,7 +170,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
             }
 
             // Handle attack
-            if (timeSinceLastAttack >= attackInterval + Random.Range(0, randomInterval) && chaseState != EnemyAiChaseState.Idle && CanSeePlayer())
+            if (timeSinceLastAttack >= attackInterval + Random.Range(0, randomInterval) && chaseState != EnemyAiChaseState.Idle && IsObjectInAttackRange())
             {
                 Attack();
                 timeSinceLastAttack = 0;
