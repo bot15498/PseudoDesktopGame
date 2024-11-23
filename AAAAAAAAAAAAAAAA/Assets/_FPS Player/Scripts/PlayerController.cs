@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (GetComponentInChildren<AnimateLean>())
             animateLean = GetComponentInChildren<AnimateLean>();
 
-        slideLimit = movement.controller.slopeLimit - .1f;
+        
         radius = movement.controller.radius;
         height = movement.controller.height;
         halfradius = radius / 2f;

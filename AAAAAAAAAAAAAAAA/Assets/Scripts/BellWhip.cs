@@ -15,6 +15,7 @@ public class BellWhip : MonoBehaviour
     private bool isDrawing = false; // Whether the line is being drawn
     private bool isRetracting = false; // Whether the line is being retracted
     bool canwhip;
+    public Animator anim;
 
     private LineRenderer lineRenderer; // LineRenderer to draw the line
 
@@ -34,6 +35,7 @@ public class BellWhip : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) && origin != null && canwhip == true)
         {
             StartDrawing();
+            anim.Play("Whip_active", -1, 0f);
             canwhip = false;
         }
 

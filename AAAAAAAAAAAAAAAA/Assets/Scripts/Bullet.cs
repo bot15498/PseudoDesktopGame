@@ -39,14 +39,14 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        transform.SetParent(collision.transform);
-
-        thiscollide.enabled = false;
-        rb.velocity = Vector3.zero;
         rb.isKinematic = true;
+        transform.SetParent(collision.transform);
         
-        Debug.Log(collision.gameObject.name);
+        thiscollide.enabled = false;
+        
+        
+        
+       
         hasHit = true;
         rb.useGravity = false;
     }

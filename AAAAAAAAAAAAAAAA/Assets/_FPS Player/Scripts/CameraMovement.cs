@@ -24,6 +24,7 @@ public class CameraMovement : MonoBehaviour
     {
         // Set target direction to the camera's initial orientation.
         targetDirection = transform.localRotation.eulerAngles;
+        Cursor.lockState = CursorLockMode.Locked;
 
         // Set target direction for the character body to its inital state.
         if (characterBody)
@@ -33,7 +34,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         // Ensure the cursor is always locked when set
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         // Allow the script to clamp based on a desired target value.
         var targetOrientation = Quaternion.Euler(targetDirection);
