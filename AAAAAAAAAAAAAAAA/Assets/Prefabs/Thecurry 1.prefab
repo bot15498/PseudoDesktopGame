@@ -1207,6 +1207,7 @@ GameObject:
   - component: {fileID: 2218450170386851824}
   - component: {fileID: 2661354169043525526}
   - component: {fileID: 867295631400151808}
+  - component: {fileID: 2919370677238279084}
   m_Layer: 0
   m_Name: Thecurry 1
   m_TagString: Untagged
@@ -1294,12 +1295,14 @@ MonoBehaviour:
   canSeeBullet: 0
   attackInterval: 1
   randomInterval: 0.1
+  anime: {fileID: 0}
   waypoints: []
   patrolWaitTimeSec: 3
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 1028
   chaseState: 0
+  prevStunState: 0
   attackRange: 6
   attackDamage: 10
   knockbackForce: 5
@@ -1345,6 +1348,26 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &2919370677238279084
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303659172175191658}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8384779327908571213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,12 +1840,14 @@ MonoBehaviour:
   canSeeBullet: 0
   attackInterval: 1
   randomInterval: 0.1
+  anime: {fileID: 0}
   waypoints: []
   patrolWaitTimeSec: 3
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
   chaseState: 0
+  prevStunState: 0
   bulletPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
 --- !u!1 &9222791306271398631

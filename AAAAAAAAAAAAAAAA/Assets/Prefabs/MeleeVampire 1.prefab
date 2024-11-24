@@ -1139,8 +1139,8 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 10
   runawaySpeed: 5
-  skinRenderer: {fileID: 0}
-  staggeredMaterial: {fileID: 0}
+  skinRenderer: {fileID: 1240383561687316313}
+  staggeredMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
   agent: {fileID: 0}
   avoidCircleRadius: 5
   lineOfSightWidth: 2
@@ -1156,12 +1156,14 @@ MonoBehaviour:
   canSeeBullet: 0
   attackInterval: 1
   randomInterval: 0.1
+  anime: {fileID: 0}
   waypoints: []
   patrolWaitTimeSec: 3
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 1028
   chaseState: 0
+  prevStunState: 0
   attackRange: 4
   attackDamage: 10
   knockbackForce: 5
