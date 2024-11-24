@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public Animator anim;
     public int SceneToLoad;
     // Start is called before the first frame update
     void Start()
@@ -21,14 +20,14 @@ public class SceneLoader : MonoBehaviour
 
     public void restartScene()
     {
-        anim.Play("FadeOut");
+        
         StartCoroutine(Example2());
     }
 
 
     public void loadScene()
     {
-        anim.Play("FadeOut");
+       
         StartCoroutine(Example());
 
     }
