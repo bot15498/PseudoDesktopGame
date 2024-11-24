@@ -14,6 +14,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject ammodrop;
     public GameObject abilitydrop;
 
+    public float maxdbnoTime = 10f;
     public float dbnoTimer;
     bool dbno;
     public int maxHealth;
@@ -48,8 +49,15 @@ public class EnemyHealth : MonoBehaviour
         {
             // Waiting for melee execution to kill us.
             aiBehavior.agent.isStopped = true;
+            aiBehavior.chaseState = EnemyAiChaseState.AttackingButStayingStillForever;
             rb.isKinematic = false;
             rb.drag = 999f;
+
+            if(dbnoTimer > maxdbnoTime)
+            {
+                Die();
+            }
+            dbnoTimer += Time.deltaTime;
         }
     }
 

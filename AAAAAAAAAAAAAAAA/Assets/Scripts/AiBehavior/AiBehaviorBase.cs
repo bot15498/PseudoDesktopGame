@@ -77,7 +77,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private AiLineOfSight lineOfSight;
     private AiViewTrigger maxViewCircle;
     [SerializeField]
-    protected EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
+    public EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
     [SerializeField]
     private float timeSinceLastSawPlayer = 0f;
     [SerializeField]
