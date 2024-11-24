@@ -7,10 +7,12 @@ public class Propagandist : AiBehaviorBase
 {
     [Tooltip("How long you have to look at this enemy before propaganda starts")]
     public float lookAtTimePropaganda = 2f;
-    [Tooltip("length of a propaganda flash")]
-    public float propagandaIntervalSec = 3f;
+    //[Tooltip("length of a propaganda flash")]
+    //public float propagandaIntervalSec = 3f;
+    public float fadeOutTime = 1.5f;
     [Tooltip("How long you have to look at this enemy before death")]
     public float lookAtTimeDeath = 30f;
+    public float maxPropagandaOpacity = 0.35f;
     public List<Sprite> propagandaImages = new List<Sprite>();
     public Image propagandaImage;
 
@@ -20,6 +22,7 @@ public class Propagandist : AiBehaviorBase
     private float timeSinceStartLook = 0f;
     private float timeSinceEndLook = 0f;
     private int propagandaImageIndex = 0;
+    private float currFadeInOpacity = 0f;
 
 
 
@@ -39,33 +42,59 @@ public class Propagandist : AiBehaviorBase
         else if (!currVisibility && lastIsVisible != currVisibility)
         {
             // Just looked away, so fade out current visibility
+            timeSinceEndLook = 0f;
         }
 
-        if (currVisibility)
+        if(currVisibility)
         {
-            if (timeSinceStartLook >= lookAtTimeDeath)
+            if(timeSinceStartLook >= lookAtTimeDeath)
             {
                 // Time to die
                 PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
                 playerHealth.TakeDamage(9999);
             }
-            else if (timeSinceStartLook >= lookAtTimePropaganda)
+            else if(timeSinceStartLook >= lookAtTimePropaganda)
             {
-                // Start fading in the propaganda image in and out. 
-                propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, CalculateOpacity(timeSinceStartLook - lookAtTimePropaganda));
+                float step = (timeSinceStartLook - lookAtTimePropaganda) / (lookAtTimeDeath - lookAtTimePropaganda);
+                currFadeInOpacity = Mathf.Lerp(0, maxPropagandaOpacity, step);
+                propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, currFadeInOpacity);
             }
             timeSinceStartLook += Time.deltaTime;
         }
-        else if (propagandaImage.color.a > 0)
+        else if(propagandaImage.color.a > 0)
         {
-            // Make sure that the propaganda goes away eventually
-            propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, Mathf.Lerp(CalculateOpacity(timeSinceStartLook - lookAtTimePropaganda), 0, timeSinceEndLook / propagandaIntervalSec));
-            timeSinceEndLook += Time.deltaTime;
-            if (propagandaImage.color.a <= 0.1f)
+            propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, Mathf.Lerp(currFadeInOpacity, 0, timeSinceEndLook/fadeOutTime));
+            if (timeSinceEndLook < fadeOutTime)
             {
-                propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, 0f);
+                timeSinceEndLook += Time.deltaTime;
             }
         }
+
+        //if (currVisibility)
+        //{
+        //    if (timeSinceStartLook >= lookAtTimeDeath)
+        //    {
+        //        // Time to die
+        //        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        //        playerHealth.TakeDamage(9999);
+        //    }
+        //    else if (timeSinceStartLook >= lookAtTimePropaganda)
+        //    {
+        //        // Start fading in the propaganda image in and out. 
+        //        propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, CalculateOpacity(timeSinceStartLook - lookAtTimePropaganda));
+        //    }
+        //    timeSinceStartLook += Time.deltaTime;
+        //}
+        //else if (propagandaImage.color.a > 0)
+        //{
+        //    // Make sure that the propaganda goes away eventually
+        //    propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, Mathf.Lerp(CalculateOpacity(timeSinceStartLook - lookAtTimePropaganda), 0, timeSinceEndLook / propagandaIntervalSec));
+        //    timeSinceEndLook += Time.deltaTime;
+        //    if (propagandaImage.color.a <= 0.1f)
+        //    {
+        //        propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, 0f);
+        //    }
+        //}
         lastIsVisible = currVisibility;
 
         base.Update();
@@ -98,16 +127,16 @@ public class Propagandist : AiBehaviorBase
         return propagandaImageIndex;
     }
 
-    private float CalculateOpacity(float timestep)
-    {
-        float toreturn = -Mathf.Cos(timestep / propagandaIntervalSec * Mathf.PI * 2) / 2 + 0.25f;
-        if (toreturn <= 0.1f)
-        {
-            // If we are close enough, swap images
-            IncrementPropagandaIndex();
-            propagandaImage.sprite = propagandaImages[propagandaImageIndex];
-            toreturn = 0;
-        }
-        return toreturn;
-    }
+    //private float CalculateOpacity(float timestep)
+    //{
+    //    float toreturn = -Mathf.Cos(timestep / propagandaIntervalSec * Mathf.PI * 2) / 2 + 0.25f;
+    //    if (toreturn <= 0.1f)
+    //    {
+    //        // If we are close enough, swap images
+    //        IncrementPropagandaIndex();
+    //        propagandaImage.sprite = propagandaImages[propagandaImageIndex];
+    //        toreturn = 0;
+    //    }
+    //    return toreturn;
+    //}
 }
