@@ -86,6 +86,6 @@ public class PullIn : MonoBehaviour
         Vector3 targetVelocity = CalculateLaunchVelocity(start, target, time);
 
         // Modify based on masss
-        return targetVelocity * rb.mass * 3f;
+        return targetVelocity * rb.mass * Vector3.Distance(start, target) * 2f/3f;
     }
 }
