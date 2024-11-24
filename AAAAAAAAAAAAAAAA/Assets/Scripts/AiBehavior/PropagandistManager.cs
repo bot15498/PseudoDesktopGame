@@ -86,7 +86,7 @@ public class PropagandistManager : MonoBehaviour
                 timeSinceSwap = 0;
             }
 
-            //timeSinceSwap += Time.deltaTime;
+            timeSinceSwap += Time.deltaTime;
             timeSinceStartLook += Time.deltaTime;
         }
         else if (propagandaImage.color.a > 0)
