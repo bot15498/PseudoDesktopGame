@@ -188,12 +188,20 @@ public abstract class AiBehaviorBase : MonoBehaviour
             {
                 Attack();
                 timeSinceLastAttack = 0;
+            }
+            else
+            {
+                timeSinceLastAttack += Time.deltaTime;
+            }
+
+            // Anime
+            if(IsObjectInAttackRange() && chaseState != EnemyAiChaseState.Idle)
+            {
                 anime.SetBool("isAttackingPlayer", true);
             }
             else
             {
                 anime.SetBool("isAttackingPlayer", false);
-                timeSinceLastAttack += Time.deltaTime;
             }
         }
         else if (stunState == EnemyAiStunState.Stagger)

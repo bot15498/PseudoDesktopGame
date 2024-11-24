@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Propagandist : AiBehaviorBase
 {
     [Tooltip("How long you have to look at this enemy before propaganda starts")]
-    public float lookAtTimePropaganda = 2f;
+    public float lookAtTimePropaganda = 0f;
     //[Tooltip("length of a propaganda flash")]
     //public float propagandaIntervalSec = 3f;
     public float fadeOutTime = 1.5f;

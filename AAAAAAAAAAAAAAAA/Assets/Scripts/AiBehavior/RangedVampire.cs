@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class RangedVampire : AiBehaviorBase
 {
+    public float adjustShootDirection = 90f;
     public GameObject bulletPrefab;
     public GameObject bulletSpawnPoint;
     public bool predictPlayerLocation = false;
+    public Vector3 playerPredictionDisplace = new Vector3(0f, -0.5f, 0f);
     private Vector3 previousPlayerLocation;
 
     new void Start()
@@ -35,7 +37,11 @@ public class RangedVampire : AiBehaviorBase
 
     public override void Attack()
     {
-        Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+        GameObject bul = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+        // Rotate to point to player center
+        Vector3 direction = player.transform.position + playerPredictionDisplace - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        bul.transform.rotation = rotation;
     }
 
     public override void FacePlayer()
