@@ -16,6 +16,15 @@ public class PlayerHealth : MonoBehaviour
     public AnimationClip playerDeathAnimation; 
     private bool died = false;
 
+    public delegate void OnDeath(GameObject player);
+    public static OnDeath onDeath;
+    public delegate void OnHit(GameObject player);
+    public static OnHit onHit;
+
+    public AudioClip hitsound;
+    public AudioClip hitsound2;
+  
+
     void Start()
     {
         health = maxHealth;
@@ -29,11 +38,26 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health = Mathf.Max(health - damage, 0); 
-        if(!died && health <= 0)
+        Random.Range(1, 2);
+        if (Random.Range(1, 2) == 1)
+        {
+            AudioSource.PlayClipAtPoint(hitsound, transform.position, 0.1f);
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(hitsound2, transform.position, 0.1f);
+        }
+        health = Mathf.Max(health - damage, 0);
+        
+
+
+        if (!died && health <= 0)
         {
             died = true;
+           
+            onHit?.Invoke(gameObject);
             Die();
+
         }
     }
 
@@ -41,5 +65,6 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("You died!!!!!!!!!");
         StartCoroutine(pauseMenu.FadeInStatic(onDeathStaticFadeInTime));;
+        onDeath?.Invoke(gameObject);
     }
 }

@@ -27,12 +27,15 @@ public class ShotgunBlast : MonoBehaviour
     bool cooldown2;
     public Animator anim;
     public TextMeshProUGUI ChargeText;
+    public AudioClip blastclip;
+    AudioSource asource;
 
 
     private void Start()
     {
         pm = GetComponent<PlayerMovement>();
         cooldown2 = false;
+        asource = GetComponent<AudioSource>();
     }
 
     public void addCharges(int chargestoadd)
@@ -58,6 +61,8 @@ public class ShotgunBlast : MonoBehaviour
             {
                 cooldown2 = true;
                 CurrentCharges -= 1;
+                asource.clip = blastclip;
+                asource.Play(); 
                 anim.Play("Shotgun_Fire", -1, 0f);
                 StartCoroutine(ExampleCoroutine());
             }
