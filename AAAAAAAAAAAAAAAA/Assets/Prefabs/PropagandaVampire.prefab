@@ -621,7 +621,7 @@ MonoBehaviour:
   avoidSpeedSmoother: 5
   agentsInAvoidanceCircle: []
   agentsInLineOfSight: []
-  maxViewDistance: 5
+  maxViewDistance: 100
   minApproachDistance: 0
   maxChaseDistance: 5
   forgetDuration: 10
