@@ -9,8 +9,10 @@ public class Crucifix : MonoBehaviour
     public float timeToCrucificTime = 0.5f;
     public Animator anim;
 
+    [SerializeField]
     private bool isCrossOut = false;
     private EnemyManager enemyManager;
+    private bool lastCrossOut = false;
 
 
     void Start()
@@ -41,16 +43,22 @@ public class Crucifix : MonoBehaviour
             isCrossOut = false;
         }
 
+        if(isCrossOut && lastCrossOut != isCrossOut)
+        {
+            enemyManager.ForceStunStateForAll(EnemyAiStunState.RunAway);
+        }
+
         if(isCrossOut)
         {
             // deplt
             crucifixTime -= Time.deltaTime;
-            enemyManager.ForceStunStateForAll(EnemyAiStunState.RunAway);
         }
         else
         {
             // recharge
             crucifixTime = Mathf.Min(maxCrucifixTime, crucifixTime + Time.deltaTime * timeToCrucificTime);
         }
+
+        lastCrossOut = isCrossOut;
     }
 }

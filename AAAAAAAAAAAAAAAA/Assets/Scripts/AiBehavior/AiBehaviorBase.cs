@@ -80,6 +80,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private float timeSinceLastSawPlayer = 0f;
     private float timeSinceLastAttack = 0f;
     private bool addedStaggerMaterial = false;
+    [SerializeField]
     private EnemyAiStunState prevStunState;
 
 
