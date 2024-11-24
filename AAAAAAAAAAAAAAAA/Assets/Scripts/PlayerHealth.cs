@@ -10,6 +10,11 @@ public class PlayerHealth : MonoBehaviour
     public int health = 100;
     public TextMeshProUGUI hptext;
     public Image hpbar;
+    public float onDeathStaticFadeInTime = 2f;
+    public PauseMenu pauseMenu;
+    public Animator playerAnimator;
+    public AnimationClip playerDeathAnimation; 
+    private bool died = false;
 
     void Start()
     {
@@ -24,9 +29,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        if(health <= 0)
+        health = Mathf.Max(health - damage, 0); 
+        if(!died && health <= 0)
         {
+            died = true;
             Die();
         }
     }
@@ -34,5 +40,6 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         Debug.Log("You died!!!!!!!!!");
+        StartCoroutine(pauseMenu.FadeInStatic(onDeathStaticFadeInTime));;
     }
 }

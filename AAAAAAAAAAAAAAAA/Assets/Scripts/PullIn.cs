@@ -47,7 +47,7 @@ public class PullIn : MonoBehaviour
             Vector3 force = CalculateLaunchForce(startPos, endPos, flightTime);
             Debug.Log(force);
             rb.AddForce(force, ForceMode.Impulse);
-            StartCoroutine(aiBehavior.DelayStunStateChange(EnemyAiStunState.Normal, 1f));
+            StartCoroutine(aiBehavior.DelayStunStateChange(EnemyAiStunState.Normal, 0.2f));
         }
         else
         {
