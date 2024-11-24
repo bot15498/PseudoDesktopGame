@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject ammodrop;
     public GameObject abilitydrop;
 
-    public float maxdbnoTime = 10f;
+    private float maxdbnoTime = 3f;
     public float dbnoTimer;
     bool dbno;
     public int maxHealth;
