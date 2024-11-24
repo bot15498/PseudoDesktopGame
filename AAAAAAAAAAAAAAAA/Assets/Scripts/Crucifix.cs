@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Crucifix : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Crucifix : MonoBehaviour
     private bool isCrossOut = false;
     private EnemyManager enemyManager;
     private bool lastCrossOut = false;
+    public Image fillimage;
 
 
     void Start()
@@ -24,6 +26,8 @@ public class Crucifix : MonoBehaviour
 
     void Update()
     {
+
+        fillimage.fillAmount = crucifixTime / maxCrucifixTime;
         if (Input.GetKeyDown(KeyCode.F))
         {
             anim.SetBool("isKeyPressed", true);
