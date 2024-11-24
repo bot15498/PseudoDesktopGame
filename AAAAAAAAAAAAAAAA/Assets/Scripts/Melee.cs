@@ -15,6 +15,8 @@ public class Melee : MonoBehaviour
     float timer;
     bool canmelee;
     public float animdelay;
+    public AudioClip swingclip;
+    public AudioClip impactclip;
 
 
     private void Start()
@@ -29,6 +31,7 @@ public class Melee : MonoBehaviour
         {
 
             StartCoroutine(ExampleCoroutine());
+            AudioSource.PlayClipAtPoint(swingclip, transform.position, 0.1f);
             anim.Play("MeleeAttack",-1,0f);
             canmelee = false;
         }
@@ -53,6 +56,7 @@ public class Melee : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             // Apply damage
+            AudioSource.PlayClipAtPoint(impactclip, transform.position, 0.1f);
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {

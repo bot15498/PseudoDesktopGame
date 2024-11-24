@@ -20,6 +20,7 @@ public class BellWhip : MonoBehaviour
     private LineRenderer lineRenderer; // LineRenderer to draw the line
 
     public PullIn currentpullin;
+    public AudioClip grappleclip;
 
 
     void Start()
@@ -35,6 +36,7 @@ public class BellWhip : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) && origin != null && canwhip == true)
         {
             StartDrawing();
+            AudioSource.PlayClipAtPoint(grappleclip, transform.position, 0.4f);
             anim.Play("Whip_active", -1, 0f);
             canwhip = false;
         }

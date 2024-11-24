@@ -6,7 +6,18 @@ using TMPro;
 
 public class Gun : MonoBehaviour
 {
+
+    public delegate void OnPlayerFire();
+    public static OnPlayerFire onPlayerFire;
+
+    public delegate void OnPlayerReload();
+    public static OnPlayerReload onPlayerReload;
+
     // Start is called before the first frame update
+
+
+    public AudioClip fireclip;
+    public AudioClip reloadclip;
     public Transform gunBarrel;
     public GameObject bullet;
     public int ammocountMax;
@@ -52,8 +63,11 @@ public class Gun : MonoBehaviour
         {
             Instantiate(bullet, gunBarrel.position, gunBarrel.rotation);
             ammocount -= 1;
+            onPlayerFire?.Invoke();
             anim.Play("Crossbow_fire", -1, 0f);
-            
+            AudioSource.PlayClipAtPoint(fireclip,transform.position,0.025f);
+
+
             Debug.Log("Shoot");
             canfire = false;
 
@@ -72,6 +86,8 @@ public class Gun : MonoBehaviour
         {
 
             anim.Play("Crossbow_reload");
+            onPlayerReload?.Invoke();
+            AudioSource.PlayClipAtPoint(reloadclip, transform.position,0.1f);
             isreloading = true;
             reloadText.SetActive(false);
         }

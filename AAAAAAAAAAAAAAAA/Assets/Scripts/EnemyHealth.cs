@@ -31,6 +31,9 @@ public class EnemyHealth : MonoBehaviour
     private Collider thiscolluider;
     Rigidbody rb;
     private AiBehaviorBase aiBehavior;
+    public AudioClip enemyhurtclip;
+    public AudioClip[] deathclips;
+    public AudioClip dbnoclip;
 
 
 
@@ -89,6 +92,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        AudioSource.PlayClipAtPoint(enemyhurtclip, transform.position, 0.5f);
         // Debug.Log($"Enemy took {damage} damage. Remaining health: {currentHealth}");
         if (currentHealth <= 0)
         {
@@ -96,11 +100,13 @@ public class EnemyHealth : MonoBehaviour
             {
                 // Just going to die.
                 Die();
+
             }
             else
             {
                 // Start timer for melee execution
                 dbno = true;
+                AudioSource.PlayClipAtPoint(dbnoclip, transform.position, 0.1f);
                 aiBehavior.stunState = EnemyAiStunState.Stagger;
             }
         }
@@ -112,6 +118,8 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         //Debug.Log("Enemy died!");
+        AudioSource.PlayClipAtPoint(deathclips[Random.Range(0,5)], transform.position, 0.7f);
+
         Destroy(gameObject);
     }
 
