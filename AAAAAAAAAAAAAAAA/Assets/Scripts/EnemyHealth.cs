@@ -119,6 +119,7 @@ public class EnemyHealth : MonoBehaviour
     {
         //Debug.Log("Enemy died!");
         AudioSource.PlayClipAtPoint(deathclips[Random.Range(0,5)], transform.position, 0.7f);
+        FindObjectOfType<EnemyManager>().enemies.Remove(aiBehavior);
 
         Destroy(gameObject);
     }
