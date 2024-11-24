@@ -260,6 +260,13 @@ public abstract class AiBehaviorBase : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
     }
 
+    public virtual void FaceAwayFromPlayer()
+    {
+        Vector3 direction = player.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(-direction);
+        transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+    }
+
     public void ChasePlayer()
     {
         rb.isKinematic = true;
@@ -271,8 +278,9 @@ public abstract class AiBehaviorBase : MonoBehaviour
     {
         rb.isKinematic = true;
         agent.isStopped = false;
-        Vector3 direction = transform.position - player.transform.position;
+        Vector3 direction = player.transform.position - transform.position;
         direction = -direction;
+        FaceAwayFromPlayer();
         agent.SetDestination(transform.position + direction.normalized * 1.5f);
     }
 
