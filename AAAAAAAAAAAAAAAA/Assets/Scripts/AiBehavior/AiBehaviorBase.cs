@@ -17,7 +17,8 @@ public enum EnemyAiStunState
 {
     Normal,
     Stun,
-    Stagger
+    Stagger,
+    RunAway
 }
 
 public enum EnemyAiChaseState
@@ -34,6 +35,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     public GameObject player;
     public float speed = 5f;
+    public float runawaySpeed = 5f;
     [Header("AI Agent Avoidance settings")]
     public NavMeshAgent agent;
     public float avoidCircleRadius = 5f;
@@ -180,6 +182,9 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 timeSinceLastAttack += Time.deltaTime;
             }
         }
+        else if(stunState == EnemyAiStunState.RunAway)
+        {
+        }
         else
         {
             StopChasePlayer();
@@ -232,7 +237,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
         }
     }
 
-    public void FacePlayer()
+    public virtual void FacePlayer()
     {
         // dumb just look at player
         Vector3 direction = player.transform.position - transform.position;
@@ -245,6 +250,15 @@ public abstract class AiBehaviorBase : MonoBehaviour
         rb.isKinematic = true;
         agent.isStopped = false;
         agent.SetDestination(player.transform.position);
+    }
+
+    public void RunAwayFromPlayer()
+    {
+        rb.isKinematic = true;
+        agent.isStopped = false;
+        Vector3 direction = transform.position - player.transform.position;
+        direction = -direction;
+        agent.SetDestination(direction * 999f);
     }
 
     public void StopChasePlayer()

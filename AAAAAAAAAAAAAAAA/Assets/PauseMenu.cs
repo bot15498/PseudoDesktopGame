@@ -63,7 +63,7 @@ public class PauseMenu : MonoBehaviour
 
     public IEnumerator FadeInStatic(float fadeInDuration)
     {
-        Time.timeScale = 0.1f;
+        Time.timeScale = 0.05f;
         Color initialColor = staticimage.color;
         Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
 
@@ -82,5 +82,6 @@ public class PauseMenu : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        Time.timeScale = 0f;
     }
 }
