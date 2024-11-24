@@ -33,6 +33,11 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+
+        if (Settings.sensitivitySettings != 0)
+        {
+            sensitivity = new Vector2(Settings.sensitivitySettings, Settings.sensitivitySettings);
+        }
         // Ensure the cursor is always locked when set
         //Cursor.lockState = CursorLockMode.Locked;
 
