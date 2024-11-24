@@ -1274,7 +1274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6b6005294a3284a85ffde492350828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyAiType: 1
+  enemyAiType: 2
   player: {fileID: 0}
   speed: 5
   runawaySpeed: 5
@@ -1305,7 +1305,7 @@ MonoBehaviour:
   timeSinceLastSawPlayer: 0
   timeSinceLastAttack: 0
   prevStunState: 0
-  attackRange: 6
+  attackRange: 8
   attackDamage: 10
   knockbackForce: 5
   teleportAttackChance: 0.2
