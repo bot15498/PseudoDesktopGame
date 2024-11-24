@@ -21,7 +21,7 @@ public class RangedVampire : AiBehaviorBase
 
     new void FixedUpdate()
     {
-        if(player != null)
+        if (player != null)
         {
             previousPlayerLocation = player.transform.position;
         }
@@ -40,29 +40,25 @@ public class RangedVampire : AiBehaviorBase
 
     public override void FacePlayer()
     {
-        if(!predictPlayerLocation || player == null)
-        {
-            // Do the base logic
-            base.FacePlayer();
-        }
-        else
+        if (chaseState != EnemyAiChaseState.Idle && predictPlayerLocation && player != null)
         {
             // Try to have some prediction
             float bulletSpeed = bulletPrefab.GetComponent<Bullet>().speed * Time.fixedDeltaTime;
 
-            float distanceToPlayer = Vector3.Distance(transform.position,player.transform.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             float timeToReachPlayerNominal = distanceToPlayer / bulletSpeed;
             // Shouldn't this be curr - prev???????
             Vector3 playerVelocity = (previousPlayerLocation - player.transform.position) / Time.fixedDeltaTime;
             Vector3 predictedPosition = playerVelocity * timeToReachPlayerNominal + player.transform.position;
-            Debug.Log($"Player velocity: {playerVelocity}");
-            Debug.Log($"time to reach player: {timeToReachPlayerNominal}");
-            Debug.Log($"Predicted player position: {predictedPosition}");
-            Debug.Log($"Player Position: {player.transform.position}");
 
             Vector3 direction = predictedPosition - transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+        }
+        else
+        {
+            // Do the base logic
+            base.FacePlayer();
         }
     }
 }

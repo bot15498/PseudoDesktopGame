@@ -72,7 +72,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private AiLineOfSight lineOfSight;
     private AiViewTrigger maxViewCircle;
     [SerializeField]
-    private EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
+    protected EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
     private float timeSinceLastSawPlayer = 0f;
     private float timeSinceLastAttack = 0f;
 
@@ -133,7 +133,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                     // Don't do anything. 
                     break;
                 case EnemyAiType.Lazy:
-                    if (CanSeePlayer(maxViewDistance) || canSeeBullet)
+                    if (CanSeePlayer() || canSeeBullet)
                     {
                         FacePlayer();
                     }
