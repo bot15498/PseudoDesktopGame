@@ -65,23 +65,23 @@ public class MeleeVampire : AiBehaviorBase
                 }
 
                 // Apply knockback
-                AiBehaviorBase aiBehavior = player.GetComponent<AiBehaviorBase>();
-                Rigidbody rb = player.GetComponent<Rigidbody>();
-                Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
-                knockbackDirection.y = 0; // Prevent movement along the Y axis
-                rb.velocity = Vector3.zero;
-                if (aiBehavior != null)
-                {
-                    aiBehavior.stunState = EnemyAiStunState.Stun;
-                    aiBehavior.agent.isStopped = true;
-                    rb.isKinematic = false;
-                    rb.AddForce(knockbackDirection.normalized * knockbackForce, ForceMode.Impulse);
-                    StartCoroutine(aiBehavior.DelayStunStateChange(EnemyAiStunState.Normal, 0.2f));
-                }
-                else if (rb != null)
-                {
-                    rb.AddForce(knockbackDirection.normalized * knockbackForce, ForceMode.Impulse);
-                }
+                //AiBehaviorBase aiBehavior = player.GetComponent<AiBehaviorBase>();
+                //Rigidbody rb = player.GetComponent<Rigidbody>();
+                //Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
+                //knockbackDirection.y = 0; // Prevent movement along the Y axis
+                //rb.velocity = Vector3.zero;
+                //if (aiBehavior != null)
+                //{
+                //    aiBehavior.stunState = EnemyAiStunState.Stun;
+                //    aiBehavior.agent.isStopped = true;
+                //    rb.isKinematic = false;
+                //    rb.AddForce(knockbackDirection.normalized * knockbackForce, ForceMode.Impulse);
+                //    StartCoroutine(aiBehavior.DelayStunStateChange(EnemyAiStunState.Normal, 0.2f));
+                //}
+                //else if (rb != null)
+                //{
+                //    rb.AddForce(knockbackDirection.normalized * knockbackForce, ForceMode.Impulse);
+                //}
             }
         }
     }
