@@ -36,6 +36,8 @@ public abstract class AiBehaviorBase : MonoBehaviour
     public GameObject player;
     public float speed = 5f;
     public float runawaySpeed = 5f;
+    public SkinnedMeshRenderer skinRenderer;
+    public Material staggeredMaterial;
     [Header("AI Agent Avoidance settings")]
     public NavMeshAgent agent;
     public float avoidCircleRadius = 5f;
@@ -75,6 +77,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     protected EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
     private float timeSinceLastSawPlayer = 0f;
     private float timeSinceLastAttack = 0f;
+    private bool addedStaggerMaterial = false;
 
 
     public abstract void Attack();
@@ -84,7 +87,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     protected void Start()
     {
         // Get rigid body
-        rb= GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 
         // Get the nav mesh agent
         agent = GetComponent<NavMeshAgent>();
@@ -182,8 +185,20 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 timeSinceLastAttack += Time.deltaTime;
             }
         }
-        else if(stunState == EnemyAiStunState.RunAway)
+        else if (stunState == EnemyAiStunState.RunAway)
         {
+            RunAwayFromPlayer();
+        }
+        else if (stunState == EnemyAiStunState.Stagger)
+        {
+            if (!addedStaggerMaterial)
+            {
+                // Staggered. so set the material
+                List<Material> currmaterials = skinRenderer.materials.ToList();
+                currmaterials.Add(staggeredMaterial);
+                skinRenderer.materials = currmaterials.ToArray();
+                addedStaggerMaterial = true;
+            }
         }
         else
         {
@@ -258,7 +273,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
         agent.isStopped = false;
         Vector3 direction = transform.position - player.transform.position;
         direction = -direction;
-        agent.SetDestination(direction * 999f);
+        agent.SetDestination(transform.position + direction.normalized * 1.5f);
     }
 
     public void StopChasePlayer()
@@ -278,7 +293,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     {
         yield return new WaitForSeconds(waitduration);
         stunState = newstate;
-        if(newstate == EnemyAiStunState.Normal)
+        if (newstate == EnemyAiStunState.Normal)
         {
             // We are becoming unstunned / unstaggered, so reenable navmesh stuff.
             rb.isKinematic = true;

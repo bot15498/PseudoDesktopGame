@@ -12,29 +12,31 @@ public class Propagandist : AiBehaviorBase
     public float fadeOutTime = 1.5f;
     [Tooltip("How long you have to look at this enemy before death")]
     public float lookAtTimeDeath = 30f;
+    public float propagandaSwapInterval = 5f; 
     public float maxPropagandaOpacity = 0.35f;
     public List<Sprite> propagandaImages = new List<Sprite>();
     public Image propagandaImage;
 
     [SerializeField]
-    private bool isVisible = false;
     private bool lastIsVisible = false;
     private float timeSinceStartLook = 0f;
     private float timeSinceEndLook = 0f;
+    private float timeSinceSwap = 0f;
     private int propagandaImageIndex = 0;
     private float currFadeInOpacity = 0f;
-
+    [SerializeField]
+    private bool isdead = false;
 
 
     new void Start()
     {
-
+        propagandaImage.sprite = propagandaImages[0];
         base.Start();
     }
 
     new void Update()
     {
-        bool currVisibility = IsVisibleByPlayer();
+        bool currVisibility = IsVisibleByPlayer() || isdead;
         if (currVisibility && lastIsVisible != currVisibility)
         {
             timeSinceStartLook = 0f;
@@ -45,13 +47,15 @@ public class Propagandist : AiBehaviorBase
             timeSinceEndLook = 0f;
         }
 
-        if(currVisibility)
+        if(currVisibility && stunState == EnemyAiStunState.Normal)
         {
             if(timeSinceStartLook >= lookAtTimeDeath)
             {
                 // Time to die
                 PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
                 playerHealth.TakeDamage(9999);
+                // Also make it so the image doesn't go away 
+                isdead = true;
             }
             else if(timeSinceStartLook >= lookAtTimePropaganda)
             {
@@ -59,6 +63,16 @@ public class Propagandist : AiBehaviorBase
                 currFadeInOpacity = Mathf.Lerp(0, maxPropagandaOpacity, step);
                 propagandaImage.color = new Color(0.5f, 0.5f, 0.5f, currFadeInOpacity);
             }
+
+            // Handle swap time
+            if(timeSinceSwap >= propagandaSwapInterval)
+            {
+                IncrementPropagandaIndex();
+                propagandaImage.sprite = propagandaImages[propagandaImageIndex];
+                timeSinceSwap = 0;
+            }
+
+            timeSinceSwap += Time.deltaTime;
             timeSinceStartLook += Time.deltaTime;
         }
         else if(propagandaImage.color.a > 0)
@@ -118,12 +132,13 @@ public class Propagandist : AiBehaviorBase
     private bool IsVisibleByPlayer()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
-        return screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1;
+        Debug.Log(screenPoint);
+        return screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1 && screenPoint.z >= 0 && CanSeePlayer();
     }
 
     private int IncrementPropagandaIndex()
     {
-        propagandaImageIndex = propagandaImageIndex + 1 % propagandaImages.Count;
+        propagandaImageIndex = (propagandaImageIndex + 1) % propagandaImages.Count;
         return propagandaImageIndex;
     }
 
