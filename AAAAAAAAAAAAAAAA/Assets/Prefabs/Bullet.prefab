@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3500
   timeoutTimeSec: 10
+  damage: 1
   aliveTime: 0
 --- !u!54 &2157888628472559979
 Rigidbody:

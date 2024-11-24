@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6210178009235403228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Forearm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8185515802822661612}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hand.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7104159111460248871}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5483015294407743246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HIP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2899694081271226047}
   - component: {fileID: 1353076380973769401}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3276436172582782541}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hand.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,15 +199,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1825823557180341875}
-  m_LocalRotation: {x: 0.0051135644, y: 0.00035112098, z: -0.050180655, w: 0.998727}
-  m_LocalPosition: {x: 1.4901161e-10, y: 0.0149896825, z: -5.587935e-10}
+  m_LocalRotation: {x: 0.0037952862, y: -0.02585154, z: -0.050297532, w: 0.99839246}
+  m_LocalPosition: {x: -0.000000002037268, y: 0.014989658, z: -0.0000000022118916}
   m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 274104530074815779}
   m_Father: {fileID: 4781608455587511052}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.285, y: -2.981, z: -5.775}
 --- !u!1 &1881464729866870661
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4781608455587511052}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Forearm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 344389014091011150}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 1966780224369515901}
   - component: {fileID: 3836191217613331751}
   - component: {fileID: 641912485446472200}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: T-55A 1963 Soviet Tank Edited by Alex.Ka..001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6947645431914524054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1444002323776149622}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6698233797752024944}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Knee.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2329313824897021806}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 833731340512121679}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shin.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,7 +525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7307989905782595718}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hand.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +558,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2497844640637577739}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1667890533720076990}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3477352752661142808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -656,7 +656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2117146753272549976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Leg.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1840552121389973163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2814555957185754422}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -733,14 +733,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4885112118678025212}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.071, y: 7.029, z: 2.864}
+  m_LocalRotation: {x: -0.47541246, y: 4.6566134e-10, z: -2.3283067e-10, w: 0.87976307}
+  m_LocalPosition: {x: 0.071, y: 7.762, z: 3.344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8680502091298030800}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -56.772, y: 0, z: 0}
 --- !u!1 &5374088346329962691
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2049956874370080338}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Knee.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -784,7 +784,7 @@ GameObject:
   - component: {fileID: 5184208916408553152}
   - component: {fileID: 8096866434698625381}
   - component: {fileID: 6321134500972475823}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StylizedSickle_FBX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -865,7 +865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6222621116575298625}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4791686909345137010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -929,7 +929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185056058803935180}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -962,7 +962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8201586924920425802}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hand.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -993,7 +993,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8062786282232089208}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1024,7 +1024,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6443426166296670328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Leg.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1056,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4026093529616691390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shin.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1088,7 +1088,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6983251896612249455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hand.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1122,7 +1122,7 @@ GameObject:
   - component: {fileID: 5697884440287925621}
   - component: {fileID: 8840665752170822895}
   - component: {fileID: 1065792739935541283}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: T-55A 1963 Soviet Tank Edited by Alex.Ka..003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1208,7 +1208,7 @@ GameObject:
   - component: {fileID: 2661354169043525526}
   - component: {fileID: 867295631400151808}
   - component: {fileID: 2919370677238279084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Thecurry 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1274,12 +1274,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6b6005294a3284a85ffde492350828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyAiType: 2
+  enemyAiType: 1
   player: {fileID: 0}
   speed: 5
   runawaySpeed: 5
-  skinRenderer: {fileID: 0}
-  staggeredMaterial: {fileID: 0}
+  skinRenderer: {fileID: 805465227633862309}
+  staggeredMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
   agent: {fileID: 0}
   avoidCircleRadius: 3
   lineOfSightWidth: 2
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   avoidSpeedSmoother: 5
   agentsInAvoidanceCircle: []
   agentsInLineOfSight: []
-  maxViewDistance: 20
+  maxViewDistance: 30
   minApproachDistance: 7
   maxChaseDistance: 8
   forgetDuration: 100
@@ -1302,6 +1302,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1028
   chaseState: 0
+  timeSinceLastSawPlayer: 0
+  timeSinceLastAttack: 0
   prevStunState: 0
   attackRange: 6
   attackDamage: 10
@@ -1358,7 +1360,7 @@ Animator:
   m_GameObject: {fileID: 8303659172175191658}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e6c58e3f896980b47b622951c4217978, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1377,7 +1379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7947169355746371717}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1409,7 +1411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5478330133610225589}
   - component: {fileID: 805465227633862309}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1519,7 +1521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7044949412944211452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1552,7 +1554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 274104530074815779}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hand.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1587,7 +1589,7 @@ GameObject:
   - component: {fileID: 388814209575408769}
   - component: {fileID: 4703422149270221002}
   - component: {fileID: 6896648709272862827}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: T-55A 1963 Soviet Tank Edited by Alex.Ka..002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1670,7 +1672,7 @@ GameObject:
   - component: {fileID: 1748522835707785737}
   - component: {fileID: 484340044436580077}
   - component: {fileID: 4298424135954969943}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: T-55A 1963 Soviet Tank Edited by Alex.Ka.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1753,7 +1755,7 @@ GameObject:
   - component: {fileID: 9222791305993710295}
   - component: {fileID: 3317880667640737645}
   - component: {fileID: 1361004266640821543}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1823,8 +1825,8 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 5
   runawaySpeed: 5
-  skinRenderer: {fileID: 0}
-  staggeredMaterial: {fileID: 0}
+  skinRenderer: {fileID: 805465227633862309}
+  staggeredMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
   agent: {fileID: 0}
   avoidCircleRadius: 5
   lineOfSightWidth: 2
@@ -1832,14 +1834,14 @@ MonoBehaviour:
   avoidSpeedSmoother: 5
   agentsInAvoidanceCircle: []
   agentsInLineOfSight: []
-  maxViewDistance: 5
+  maxViewDistance: 20
   minApproachDistance: 0
   maxChaseDistance: 5
   forgetDuration: 10
   stunState: 0
   canSeeBullet: 0
-  attackInterval: 1
-  randomInterval: 0.1
+  attackInterval: 3
+  randomInterval: 0.01
   anime: {fileID: 0}
   waypoints: []
   patrolWaitTimeSec: 3
@@ -1847,9 +1849,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   chaseState: 0
+  timeSinceLastSawPlayer: 0
+  timeSinceLastAttack: 0
   prevStunState: 0
-  bulletPrefab: {fileID: 0}
-  bulletSpawnPoint: {fileID: 0}
+  timeToReachPlayer: 3
+  bulletPrefab: {fileID: 2157888628472559976, guid: 36be60f98a1faba4ca6c97783072ad30,
+    type: 3}
+  bulletSpawnPoint: {fileID: 4885112118678025212}
 --- !u!1 &9222791306271398631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,7 +1868,7 @@ GameObject:
   - component: {fileID: 9222791306271398619}
   - component: {fileID: 9222791306271398618}
   - component: {fileID: 9222791306271398617}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2096,7 +2102,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 114
+  m_VersionIndex: 120
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2162,7 +2168,7 @@ GameObject:
   - component: {fileID: 9222791306738123849}
   - component: {fileID: 9222791306738123851}
   - component: {fileID: 9222791306738123850}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -26,7 +26,8 @@ public enum EnemyAiChaseState
     Idle,
     AttackingAndChasing,
     AttackingAndIdle,
-    ChasingForLineOfSight
+    ChasingForLineOfSight,
+    AttackingButStayingStillForever
 }
 
 public abstract class AiBehaviorBase : MonoBehaviour
@@ -77,7 +78,9 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private AiViewTrigger maxViewCircle;
     [SerializeField]
     protected EnemyAiChaseState chaseState = EnemyAiChaseState.Idle;
+    [SerializeField]
     private float timeSinceLastSawPlayer = 0f;
+    [SerializeField]
     private float timeSinceLastAttack = 0f;
     private bool addedStaggerMaterial = false;
     [SerializeField]
@@ -95,13 +98,19 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
         // Get the nav mesh agent
         agent = GetComponent<NavMeshAgent>();
-        agent.enabled = true;
-        agent.speed = speed;
+        if(agent != null)
+        {
+            agent.enabled = true;
+            agent.speed = speed;
+        }
 
         anime = GetComponent<Animator>();
-        anime.SetBool("isChasingPlayer", false);
-        anime.SetBool("isAttackingPlayer", false);
-        anime.SetBool("isStaggered", false);
+        if(anime != null)
+        {
+            anime.SetBool("isChasingPlayer", false);
+            anime.SetBool("isAttackingPlayer", false);
+            anime.SetBool("isStaggered", false);
+        }
 
         // Set up lists
         agentsInAvoidanceCircle = new List<Transform>();
@@ -145,6 +154,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
                     // Don't do anything. 
                     break;
                 case EnemyAiType.Lazy:
+                    chaseState = EnemyAiChaseState.AttackingButStayingStillForever;
                     if (CanSeePlayer() || canSeeBullet)
                     {
                         FacePlayer();
@@ -195,13 +205,16 @@ public abstract class AiBehaviorBase : MonoBehaviour
             }
 
             // Anime
-            if(IsObjectInAttackRange() && chaseState != EnemyAiChaseState.Idle)
+            if (anime != null)
             {
-                anime.SetBool("isAttackingPlayer", true);
-            }
-            else
-            {
-                anime.SetBool("isAttackingPlayer", false);
+                if (IsObjectInAttackRange() && chaseState != EnemyAiChaseState.Idle)
+                {
+                    anime.SetBool("isAttackingPlayer", true);
+                }
+                else
+                {
+                    anime.SetBool("isAttackingPlayer", false);
+                }
             }
         }
         else if (stunState == EnemyAiStunState.Stagger)
@@ -213,7 +226,10 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 currmaterials.Add(staggeredMaterial);
                 skinRenderer.materials = currmaterials.ToArray();
                 addedStaggerMaterial = true;
-                anime.SetBool("isStaggered", true);
+                if(anime != null)
+                {
+                    anime.SetBool("isStaggered", true);
+                }
             }
         }
         else if (stunState == EnemyAiStunState.RunAway)
@@ -289,27 +305,45 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     public void ChasePlayer()
     {
-        rb.isKinematic = true;
-        agent.isStopped = false;
-        agent.SetDestination(player.transform.position);
-        anime.SetBool("isChasingPlayer", true);
+        if(agent != null)
+        {
+            rb.isKinematic = true;
+            agent.isStopped = false;
+            agent.SetDestination(player.transform.position);
+            if(anime != null)
+            {
+                anime.SetBool("isChasingPlayer", true);
+            }
+        }
     }
 
     public void RunAwayFromPlayer()
     {
-        rb.isKinematic = true;
-        agent.isStopped = false;
-        Vector3 direction = player.transform.position - transform.position;
-        direction = -direction;
-        FaceAwayFromPlayer();
-        agent.SetDestination(transform.position + direction.normalized * 1.5f);
-        anime.SetBool("isChasingPlayer", true);
+        if(agent != null)
+        {
+            rb.isKinematic = true;
+            agent.isStopped = false;
+            Vector3 direction = player.transform.position - transform.position;
+            direction = -direction;
+            FaceAwayFromPlayer();
+            agent.SetDestination(transform.position + direction.normalized * 1.5f);
+            if (anime != null)
+            {
+                anime.SetBool("isChasingPlayer", true);
+            }
+        }
     }
 
     public void StopChasePlayer()
     {
-        agent.isStopped = true;
-        anime.SetBool("isChasingPlayer", false);
+        if(agent != null)
+        {
+            agent.isStopped = true;
+            if(anime != null)
+            {
+                anime.SetBool("isChasingPlayer", false);
+            }
+        }
     }
 
     private IEnumerator DelayIndexIncrease(float seconds)
@@ -345,39 +379,42 @@ public abstract class AiBehaviorBase : MonoBehaviour
 
     public void ApplyAvoidance()
     {
-        if (agentsInAvoidanceCircle.Count == 0 && agentsInLineOfSight.Count == 0)
+        if(agent != null)
         {
-            return;
+            if (agentsInAvoidanceCircle.Count == 0 && agentsInLineOfSight.Count == 0)
+            {
+                return;
+            }
+
+            // Figure out vector to move in to avoid nearby enemies.
+            // Do this by adding all the vectors together, then normalize it and flip it on the xz plane.
+            Vector3 directionToNearbyEnemies = Vector3.zero;
+            float maxDistance = 0f;
+            foreach (Transform t in agentsInAvoidanceCircle)
+            {
+                directionToNearbyEnemies += t.position - transform.position;
+                float currDistance = Vector3.Distance(t.position, transform.position);
+                maxDistance = maxDistance < currDistance ? currDistance : maxDistance;
+            }
+
+            // Now add in line of sight
+            //foreach(Transform t in agentsInLineOfSight)
+            //{
+            //    // vector of enemy to nearby enemy relative to face orientation
+            //    directionToNearbyEnemies += (t.position - transform.position).normalized - (transform.rotation * Vector3.right).normalized;
+            //    float currDistance = directionToNearbyEnemies.magnitude;
+            //    maxDistance = maxDistance < currDistance ? currDistance : maxDistance;
+            //}
+            directionToNearbyEnemies = directionToNearbyEnemies.normalized;
+
+            // Apply to velocity
+            // Lerp it so it slows down as the enemies get further from each other. 
+            agent.velocity = Vector3.Lerp(
+                agent.desiredVelocity,
+                -directionToNearbyEnemies * agent.speed * avoidSpeedMultiplier,
+                Mathf.Clamp01((avoidCircleRadius - maxDistance) / avoidSpeedSmoother)
+            );
         }
-
-        // Figure out vector to move in to avoid nearby enemies.
-        // Do this by adding all the vectors together, then normalize it and flip it on the xz plane.
-        Vector3 directionToNearbyEnemies = Vector3.zero;
-        float maxDistance = 0f;
-        foreach (Transform t in agentsInAvoidanceCircle)
-        {
-            directionToNearbyEnemies += t.position - transform.position;
-            float currDistance = Vector3.Distance(t.position, transform.position);
-            maxDistance = maxDistance < currDistance ? currDistance : maxDistance;
-        }
-
-        // Now add in line of sight
-        //foreach(Transform t in agentsInLineOfSight)
-        //{
-        //    // vector of enemy to nearby enemy relative to face orientation
-        //    directionToNearbyEnemies += (t.position - transform.position).normalized - (transform.rotation * Vector3.right).normalized;
-        //    float currDistance = directionToNearbyEnemies.magnitude;
-        //    maxDistance = maxDistance < currDistance ? currDistance : maxDistance;
-        //}
-        directionToNearbyEnemies = directionToNearbyEnemies.normalized;
-
-        // Apply to velocity
-        // Lerp it so it slows down as the enemies get further from each other. 
-        agent.velocity = Vector3.Lerp(
-            agent.desiredVelocity,
-            -directionToNearbyEnemies * agent.speed * avoidSpeedMultiplier,
-            Mathf.Clamp01((avoidCircleRadius - maxDistance) / avoidSpeedSmoother)
-        );
     }
 
     public void ApplyFollow()
