@@ -1230,8 +1230,8 @@ MonoBehaviour:
   abilitydrop: {fileID: 4500954571707462489, guid: c31b5b5521dd5d5448d8d64c2c295514,
     type: 3}
   dbnoTimer: 0
-  maxHealth: 5
-  currentHealth: 5
+  maxHealth: 3
+  currentHealth: 3
   minForce: 0.2
   maxForce: 0.4
   upwardBias: 0.5

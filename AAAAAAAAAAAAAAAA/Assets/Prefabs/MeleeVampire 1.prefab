@@ -1163,6 +1163,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1028
   chaseState: 0
+  timeSinceLastSawPlayer: 0
+  timeSinceLastAttack: 0
   prevStunState: 0
   attackRange: 4
   attackDamage: 10
@@ -1246,8 +1248,8 @@ MonoBehaviour:
   abilitydrop: {fileID: 4500954571707462489, guid: c31b5b5521dd5d5448d8d64c2c295514,
     type: 3}
   dbnoTimer: 0
-  maxHealth: 5
-  currentHealth: 0
+  maxHealth: 4
+  currentHealth: 4
   minForce: 0.2
   maxForce: 0.4
   upwardBias: 0.5
