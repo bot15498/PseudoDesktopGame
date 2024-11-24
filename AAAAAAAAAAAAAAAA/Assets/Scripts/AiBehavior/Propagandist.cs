@@ -132,7 +132,6 @@ public class Propagandist : AiBehaviorBase
     private bool IsVisibleByPlayer()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
-        Debug.Log(screenPoint);
         return screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1 && screenPoint.z >= 0 && CanSeePlayer();
     }
 
