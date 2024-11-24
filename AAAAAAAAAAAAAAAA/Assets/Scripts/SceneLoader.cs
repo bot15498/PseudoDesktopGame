@@ -9,7 +9,9 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // Since this script is on the main menu,
+        // use this to load Audio Manager at start of game
+        SceneManager.LoadScene("AudioManager", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
