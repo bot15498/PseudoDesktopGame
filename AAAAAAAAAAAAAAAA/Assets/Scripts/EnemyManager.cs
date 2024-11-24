@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyManager : MonoBehaviour
 {
+    public GameObject intro;
     public List<AiBehaviorBase> enemies;
+    private bool gonext = false;
 
     void Start()
     {
@@ -15,7 +18,11 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        
+        if(!gonext && enemies.Count == 0)
+        {
+            StartCoroutine(GoToNextScene());
+            gonext = true;
+        }
     }
 
     public void SpawnEnemy()
@@ -40,5 +47,19 @@ public class EnemyManager : MonoBehaviour
         {
             ai.TempRestoreStunState();
         }
+    }
+
+    private IEnumerator GoToNextScene()
+    {
+        float timer = 0f;
+        float maxtime = 2f;
+        intro.SetActive(true);
+        while (timer < maxtime)
+        {
+
+            timer += Time.deltaTime;
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        yield return null;
     }
 }
