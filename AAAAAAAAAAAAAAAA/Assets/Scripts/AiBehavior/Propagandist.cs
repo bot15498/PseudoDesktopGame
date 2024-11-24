@@ -10,7 +10,7 @@ public class Propagandist : AiBehaviorBase
     new void Start()
     {
         manager = FindObjectOfType<PropagandistManager>();
-        if(manager != null)
+        if (manager != null)
         {
             manager.propagang.Add(this);
         }
@@ -42,7 +42,7 @@ public class Propagandist : AiBehaviorBase
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
         bool toreturn = screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1 && screenPoint.z >= 0 && CanSeePlayer();
-        if(stunState == EnemyAiStunState.Normal)
+        if (stunState == EnemyAiStunState.Normal && CanSeePlayer(maxViewDistance))
         {
             return toreturn;
         }
