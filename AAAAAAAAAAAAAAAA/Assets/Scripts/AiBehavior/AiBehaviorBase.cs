@@ -17,8 +17,8 @@ public enum EnemyAiStunState
 {
     Normal,
     Stun,
-    Stagger,
-    RunAway
+    RunAway,
+    Stagger
 }
 
 public enum EnemyAiChaseState
@@ -60,6 +60,8 @@ public abstract class AiBehaviorBase : MonoBehaviour
     [Header("General attack stuff.")]
     public float attackInterval = 1f;
     public float randomInterval = 0.1f;
+    [Header("anime")]
+    public Animator anime;
 
     // For patroling
     public Transform[] waypoints;
@@ -78,6 +80,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
     private float timeSinceLastSawPlayer = 0f;
     private float timeSinceLastAttack = 0f;
     private bool addedStaggerMaterial = false;
+    private EnemyAiStunState prevStunState;
 
 
     public abstract void Attack();
@@ -93,6 +96,11 @@ public abstract class AiBehaviorBase : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
         agent.speed = speed;
+
+        anime = GetComponent<Animator>();
+        anime.SetBool("isChasingPlayer", false);
+        anime.SetBool("isAttackingPlayer", false);
+        anime.SetBool("isStaggered", false);
 
         // Set up lists
         agentsInAvoidanceCircle = new List<Transform>();
@@ -179,15 +187,13 @@ public abstract class AiBehaviorBase : MonoBehaviour
             {
                 Attack();
                 timeSinceLastAttack = 0;
+                anime.SetBool("isAttackingPlayer", true);
             }
             else
             {
+                anime.SetBool("isAttackingPlayer", false);
                 timeSinceLastAttack += Time.deltaTime;
             }
-        }
-        else if (stunState == EnemyAiStunState.RunAway)
-        {
-            RunAwayFromPlayer();
         }
         else if (stunState == EnemyAiStunState.Stagger)
         {
@@ -198,7 +204,12 @@ public abstract class AiBehaviorBase : MonoBehaviour
                 currmaterials.Add(staggeredMaterial);
                 skinRenderer.materials = currmaterials.ToArray();
                 addedStaggerMaterial = true;
+                anime.SetBool("isStaggered", true);
             }
+        }
+        else if (stunState == EnemyAiStunState.RunAway)
+        {
+            RunAwayFromPlayer();
         }
         else
         {
@@ -272,6 +283,7 @@ public abstract class AiBehaviorBase : MonoBehaviour
         rb.isKinematic = true;
         agent.isStopped = false;
         agent.SetDestination(player.transform.position);
+        anime.SetBool("isChasingPlayer", true);
     }
 
     public void RunAwayFromPlayer()
@@ -282,11 +294,13 @@ public abstract class AiBehaviorBase : MonoBehaviour
         direction = -direction;
         FaceAwayFromPlayer();
         agent.SetDestination(transform.position + direction.normalized * 1.5f);
+        anime.SetBool("isChasingPlayer", true);
     }
 
     public void StopChasePlayer()
     {
         agent.isStopped = true;
+        anime.SetBool("isChasingPlayer", false);
     }
 
     private IEnumerator DelayIndexIncrease(float seconds)
@@ -307,6 +321,17 @@ public abstract class AiBehaviorBase : MonoBehaviour
             rb.isKinematic = true;
         }
         yield return null;
+    }
+
+    public void TempSetStunState(EnemyAiStunState newstate)
+    {
+        prevStunState = stunState;
+        stunState = newstate;
+    }
+
+    public void TempRestoreStunState()
+    {
+        stunState = prevStunState;
     }
 
     public void ApplyAvoidance()

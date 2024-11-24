@@ -30,14 +30,14 @@ public class Crucifix : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.F))
         {
             anim.SetBool("isKeyPressed", false);
-            enemyManager.ForceStunStateForAll(EnemyAiStunState.Normal);
+            enemyManager.RestoreStunStateForAll();
             isCrossOut = false;
         }
         else if(isCrossOut && crucifixTime <= 0)
         {
             anim.SetBool("isKeyPressed", false);
             crucifixTime = 0f;
-            enemyManager.ForceStunStateForAll(EnemyAiStunState.Normal);
+            enemyManager.RestoreStunStateForAll();
             isCrossOut = false;
         }
 

@@ -710,6 +710,37 @@ Transform:
   m_Father: {fileID: 4791686909345137010}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4885112118678025212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2814555957185754422}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2814555957185754422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4885112118678025212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.071, y: 7.029, z: 2.864}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8680502091298030800}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5374088346329962691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1203,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8680502091298030800}
+  - component: {fileID: 4769278090031802544}
+  - component: {fileID: 2218450170386851824}
+  - component: {fileID: 2661354169043525526}
+  - component: {fileID: 867295631400151808}
   m_Layer: 0
   m_Name: Thecurry 1
   m_TagString: Untagged
@@ -1194,9 +1229,122 @@ Transform:
   - {fileID: 344389014091011150}
   - {fileID: 5478330133610225589}
   - {fileID: 9222791305993710295}
+  - {fileID: 2814555957185754422}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -179.308, z: 0}
+--- !u!114 &4769278090031802544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303659172175191658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123421af088ebb344834215b074a84fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bypassMeleeExecution: 1
+  healthDrops: 3
+  AmmoDrops: 3
+  AbilityDrops: 3
+  healthdrop: {fileID: 1448167405844281095, guid: 58d0d35b24f5ebd4093b0ca5110dcf99,
+    type: 3}
+  ammodrop: {fileID: 5688015246612044462, guid: a9a9e615455217d4a8a285ea6cc7ab0c,
+    type: 3}
+  abilitydrop: {fileID: 4500954571707462489, guid: c31b5b5521dd5d5448d8d64c2c295514,
+    type: 3}
+  dbnoTimer: 0
+  maxHealth: 5
+  currentHealth: 0
+  minForce: 0.2
+  maxForce: 0.4
+  upwardBias: 0.5
+--- !u!114 &2218450170386851824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303659172175191658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6b6005294a3284a85ffde492350828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAiType: 2
+  player: {fileID: 0}
+  speed: 5
+  runawaySpeed: 5
+  skinRenderer: {fileID: 0}
+  staggeredMaterial: {fileID: 0}
+  agent: {fileID: 0}
+  avoidCircleRadius: 3
+  lineOfSightWidth: 2
+  avoidSpeedMultiplier: 2
+  avoidSpeedSmoother: 5
+  agentsInAvoidanceCircle: []
+  agentsInLineOfSight: []
+  maxViewDistance: 20
+  minApproachDistance: 7
+  maxChaseDistance: 8
+  forgetDuration: 100
+  stunState: 0
+  canSeeBullet: 0
+  attackInterval: 1
+  randomInterval: 0.1
+  waypoints: []
+  patrolWaitTimeSec: 3
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 1028
+  chaseState: 0
+  attackRange: 6
+  attackDamage: 10
+  knockbackForce: 5
+  teleportAttackChance: 0.2
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 260
+--- !u!54 &2661354169043525526
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303659172175191658}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
+--- !u!195 &867295631400151808
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303659172175191658}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.75
+  m_Speed: 3.5
+  m_Acceleration: 30
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 5.01
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &8384779327908571213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,6 +1728,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9222791305993710295}
+  - component: {fileID: 3317880667640737645}
+  - component: {fileID: 1361004266640821543}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -1606,6 +1756,75 @@ Transform:
   m_Father: {fileID: 8680502091298030800}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3317880667640737645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9222791305993710294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123421af088ebb344834215b074a84fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bypassMeleeExecution: 1
+  healthDrops: 3
+  AmmoDrops: 3
+  AbilityDrops: 3
+  healthdrop: {fileID: 1448167405844281095, guid: 58d0d35b24f5ebd4093b0ca5110dcf99,
+    type: 3}
+  ammodrop: {fileID: 5688015246612044462, guid: a9a9e615455217d4a8a285ea6cc7ab0c,
+    type: 3}
+  abilitydrop: {fileID: 4500954571707462489, guid: c31b5b5521dd5d5448d8d64c2c295514,
+    type: 3}
+  dbnoTimer: 0
+  maxHealth: 5
+  currentHealth: 0
+  minForce: 0.2
+  maxForce: 0.4
+  upwardBias: 0.5
+--- !u!114 &1361004266640821543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9222791305993710294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756dd10bbd7833f4f907ba558270553a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAiType: 1
+  player: {fileID: 0}
+  speed: 5
+  runawaySpeed: 5
+  skinRenderer: {fileID: 0}
+  staggeredMaterial: {fileID: 0}
+  agent: {fileID: 0}
+  avoidCircleRadius: 5
+  lineOfSightWidth: 2
+  avoidSpeedMultiplier: 2
+  avoidSpeedSmoother: 5
+  agentsInAvoidanceCircle: []
+  agentsInLineOfSight: []
+  maxViewDistance: 5
+  minApproachDistance: 0
+  maxChaseDistance: 5
+  forgetDuration: 10
+  stunState: 0
+  canSeeBullet: 0
+  attackInterval: 1
+  randomInterval: 0.1
+  waypoints: []
+  patrolWaitTimeSec: 3
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  chaseState: 0
+  bulletPrefab: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
 --- !u!1 &9222791306271398631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +2109,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

@@ -785,7 +785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069973276347574071}
   m_LocalRotation: {x: 0.9665107, y: -0.022915721, z: -0.15919203, w: 0.19997457}
-  m_LocalPosition: {x: 0.0040891324, y: -0.00015274763, z: 0.0013774645}
+  m_LocalPosition: {x: 0.004089132, y: -0.00015274763, z: 0.0013774645}
   m_LocalScale: {x: 0.9999998, y: 1, z: 1.000001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -948,7 +948,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758183840258539309}
   m_LocalRotation: {x: -0.055483352, y: 2.8825134e-14, z: 0.000000013228261, w: 0.99845964}
-  m_LocalPosition: {x: -1.2670753e-12, y: 0.0074481824, z: -3.10314e-13}
+  m_LocalPosition: {x: -1.2670753e-12, y: 0.007448182, z: -3.10314e-13}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1099,6 +1099,7 @@ GameObject:
   - component: {fileID: 7021711717137291538}
   - component: {fileID: 7718061278044498010}
   - component: {fileID: 7656496499960438806}
+  - component: {fileID: 7728752162482299823}
   m_Layer: 8
   m_Name: MeleeVampire 1
   m_TagString: Untagged
@@ -1138,6 +1139,8 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 10
   runawaySpeed: 5
+  skinRenderer: {fileID: 0}
+  staggeredMaterial: {fileID: 0}
   agent: {fileID: 0}
   avoidCircleRadius: 5
   lineOfSightWidth: 2
@@ -1200,7 +1203,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 4
+  m_Height: 2.7
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -1256,10 +1259,30 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.6
-  m_Height: 4
+  m_Radius: 0.5
+  m_Height: 2.7
   m_Direction: 1
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: 0, y: 1.35, z: 0}
+--- !u!95 &7728752162482299823
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3573978405746445188}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f6b510ce734cac84a9accbda23412a85, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3778291201623314736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1724,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4932393906858066897}
   m_LocalRotation: {x: 0.9665108, y: 0.022915786, z: 0.15919176, w: 0.19997472}
-  m_LocalPosition: {x: -0.003935485, y: -0.00015274757, z: 0.0013774666}
+  m_LocalPosition: {x: -0.003935485, y: -0.00015274757, z: 0.001377467}
   m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2794,8 +2817,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8590882520213105875}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.71, z: 0}
-  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
+  m_LocalPosition: {x: 0, y: 2.39, z: 0}
+  m_LocalScale: {x: 0.11, y: 0.11, z: 0.11}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 55160148220552951}

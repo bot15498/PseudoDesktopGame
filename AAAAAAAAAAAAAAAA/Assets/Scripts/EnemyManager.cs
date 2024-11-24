@@ -27,7 +27,18 @@ public class EnemyManager : MonoBehaviour
     {
         foreach(var ai in enemies)
         {
-            ai.stunState = state;
+            if(((int)ai.stunState) <= ((int)state))
+            {
+                ai.TempSetStunState(state);
+            }
+        }
+    }
+
+    public void RestoreStunStateForAll()
+    {
+        foreach (var ai in enemies)
+        {
+            ai.TempRestoreStunState();
         }
     }
 }
